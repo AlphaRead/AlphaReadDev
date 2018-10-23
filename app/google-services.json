@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "124107116321",
+    "firebase_url": "https://alphareadapp-master.firebaseio.com",
+    "project_id": "alphareadapp-master",
+    "storage_bucket": "alphareadapp-master.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124107116321:android:0a00bb1f7d136e8d",
+        "android_client_info": {
+          "package_name": "com.example.allan.appalpharead"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124107116321-r2d4426gp254no9hmvl69gjvi89bjubo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.allan.appalpharead",
+            "certificate_hash": "487405e42a977b5f62978915447bd422fb87da70"
+          }
+        },
+        {
+          "client_id": "124107116321-v4714s4vi7dfbpt3advcrii841c9l45q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjPpdINQyAmGn_4trVDzhnSopLsNj5o5Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124107116321-v4714s4vi7dfbpt3advcrii841c9l45q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

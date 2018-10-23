@@ -1,0 +1,3 @@
+# AlphaReadApp
+Para sanar a problemática do analfabetismo em várias etapas distintas do ciclo de vida de uma pessoa, este trabalho pretende abranger uma aplicação que apoie, incentive e ensine de forma prática, teórica e dinâmica, ao indivíduo que é semi ou completamente analfabeto. Desse modo, a finalidade dessa aplicação é fundamentar a ideia de produzir o ensino da leitura e da escrita através de um aplicativo mobile. Não obstante, serão inseridos conceitos de aprendizado de máquina e redes neurais, bem como reconhecimento de objetos e de fala. Todas essas ferramentas serão utilizadas em prol da aquisição do conhecimento.
+
