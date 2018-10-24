@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.example.allan.appalpharead.provas.Prova;
 import com.example.allan.appalpharead.provas.QuestionOne;
 import com.example.allan.appalpharead.provas.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,41 +34,50 @@ public class SearchExam extends Activity {
         listExam = findViewById(R.id.listExam);
 
         nomes = new ArrayList<>();
-        final ArrayList<Prova> provas = new ArrayList<>();
+        final ArrayList<QuestionOne> questoes = new ArrayList<>();
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String uid = mAuth.getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference refProva = database.getReference("Provas");
+        DatabaseReference refProva = database.getReference("Users/");
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, nomes);
 
         refProva.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                        for (DataSnapshot qSnapShot : ds.child("Provas/QuestionOne").getChildren()){
+                            questoes.add(qSnapShot.getValue(QuestionOne.class));
+                            nomes.add(qSnapShot.getValue(QuestionOne.class).getTitle());
+                            Log.i("Words", qSnapShot.getValue(QuestionOne.class).getTitle());
+                        }
                     //QuestionOne q = ds.getValue(QuestionOne.class);
                     //provas.add(q);
                         Log.d("myTag", ds.getValue(Prova.class).toString());
-                }            }
+
+                }
+                        listExam.setAdapter(arrayAdapter);
+
+                    }
+
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-            //provas.add(adicionaProva("casa", "cama", "gato", "Allan", "Objetos"));
-            //provas.add(adicionaProva("correr", "andar", "nadar", "Izabela", "Verbos"));
-            //provas.add(adicionaProva("gato", "cachorro", "papagaio", "Bruno Henrique", "Animais"));
-            //provas.add(adicionaProva("médico", "ginecologista", "desenvolvedor", "Érika", "Profissões"));
-            //provas.add(adicionaProva("vermelho", "azul", "amarelo", "Edson", "Cores"));
-            //provas.add(adicionaProva("pirulito", "brigadeiro", "bolo", "Rodrigo", "Doces"));
-            //provas.add(adicionaProva("matemática", "ciências", "biologia", "Bruno Amorim", "Disciplinas"));
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, nomes);
+
+       // ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, nomes);
         listExam.setAdapter(arrayAdapter);
 
         listExam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent it = new Intent(getApplicationContext(), AnswerQuestionOne.class);
-                //it.putExtra("word1", provas.get(position).get_q1().get_text_question().get(0));
-                //it.putExtra("word2", provas.get(position).get_q1().get_text_question().get(1));
-                //it.putExtra("word3", provas.get(position).get_q1().get_text_question().get(2));
+                it.putExtra("word1", questoes.get(position).getQ1());
+                it.putExtra("word2", questoes.get(position).getQ2());
+                it.putExtra("word3", questoes.get(position).getQ3());
                 startActivity(it);
             }
         });
