@@ -17,4 +17,5 @@
     <string name="title_activity_finalizar_build">FinalizarBuild</string>
     <string name="title_activity_search_exam">SearchExam</string>
     <string name="title_activity_answer_question_one">AnswerQuestionOne</string>
+    <string name="title_activity_final_point">FinalPoint</string>
 </resources>

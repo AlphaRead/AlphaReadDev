@@ -38,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
         Button login = findViewById(R.id.Login_login);
 
         Button registar = findViewById(R.id.Registrar_login);
+
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+            Intent it = new Intent(MainActivity.this, PaginaPrincipal.class);
+            startActivity(it);
+            finish();
+        }
+
         registar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

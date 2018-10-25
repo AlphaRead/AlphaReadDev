@@ -1,9 +1,13 @@
 package com.example.allan.appalpharead;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.Editable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +31,13 @@ public class AnswerQuestionOne extends Activity {
     private TextView words, sig1, sig2, sig3;
     private EditText ans1, ans2, ans3;
 
+    private Button avancar;
+
     private Bundle bundle;
 
     private Context context;
+
+    ArrayList<String> q;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +47,7 @@ public class AnswerQuestionOne extends Activity {
         this.context = getApplicationContext();
 
         bundle = getIntent().getExtras();
-        ArrayList<String> q = new ArrayList<>();
+        q = new ArrayList<>();
         q.add(bundle.getString("word1"));
         q.add(bundle.getString("word2"));
         q.add(bundle.getString("word3"));
@@ -57,9 +65,34 @@ public class AnswerQuestionOne extends Activity {
         searchInDict(q.get(0), sig1);
         searchInDict(q.get(1), sig2);
         searchInDict(q.get(2), sig3);
-    }
 
-    private void searchInDict(String word, final TextView sig){
+        avancar = findViewById(R.id.btnAvancar);
+        avancar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ans1 = findViewById(R.id.ans1);
+                ans2 = findViewById(R.id.ans2);
+                ans3 = findViewById(R.id.ans3);
+                int point = avaliate(ans1.getText().toString(), ans2.getText().toString(), ans3.getText().toString());
+                String i = Integer.toString(point);
+                Log.i("Words", i);
+                Intent it = new Intent(context, FinalPoint.class);
+                it.putExtra("Point", i);
+                startActivity(it);
+            }
+
+            private int avaliate(String ans1, String ans2, String ans3) {
+                int point = 0;
+                if(ans1.toLowerCase().equals(q.get(0).toLowerCase())) point++;
+                if(ans2.toLowerCase().equals(q.get(1).toLowerCase())) point++;
+                if(ans3.toLowerCase().equals(q.get(2).toLowerCase())) point++;
+                return point;
+            }
+
+
+        });
+    }
+    private void searchInDict(final String word, final TextView sig){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://dicionario-aberto.net/") //define a url base
                 .addConverterFactory(GsonConverterFactory.create()) //define o objeto de converção (Gson)
@@ -75,23 +108,27 @@ public class AnswerQuestionOne extends Activity {
             @Override
             public void onResponse(Call<DicionarioOnline> call, Response<DicionarioOnline> response) {
                 if (response.isSuccessful()) {
-                    //Requisição retornou com sucesso
-                    DicionarioOnline dicionario = response.body();
-                    Entry e = dicionario.entry;
-                    Pattern REMOVE_TAGS = Pattern.compile("<.+?>");
+                    try {
+                        //Requisição retornou com sucesso
+                        DicionarioOnline dicionario = response.body();
+                        Entry e = dicionario.entry;
+                        Pattern REMOVE_TAGS = Pattern.compile("<.+?>");
 
-                    for (Sense s : e.sense) {
-                        Matcher m = REMOVE_TAGS.matcher(s.def);
-                        Log.i("Words", m.replaceAll(";").split(";")[0]);
-                        sig.setText(m.replaceAll(";").split(";")[0]);
-                        break;
+                        for (Sense s : e.sense) {
+                            Matcher m = REMOVE_TAGS.matcher(s.def);
+                            Log.i("Words", m.replaceAll(";").split(";")[0]);
+                            sig.setText(m.replaceAll(";").split(";")[0]);
+                            break;
+                        }
+                    }catch (Exception e){
+                        sig.setText("Palavra não encontrada no dicionário.");
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<DicionarioOnline> call, Throwable t) {
-                Toast.makeText(context, "DEU MERDA", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Palavra '"+word+"' não encontrada.", Toast.LENGTH_LONG).show();
             }
         });
     }
