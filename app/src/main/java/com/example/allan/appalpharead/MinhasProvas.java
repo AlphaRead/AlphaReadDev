@@ -44,7 +44,7 @@ public class MinhasProvas extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     QuestionOne q = ds.getValue(QuestionOne.class);
-                    test.setText(q.getTitle());
+                    //test.setText(q.getTitle());
                     q1List.add(q);
 
                 }

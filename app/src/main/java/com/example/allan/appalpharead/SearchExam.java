@@ -49,8 +49,8 @@ public class SearchExam extends Activity {
 
                         for (DataSnapshot qSnapShot : ds.child("Provas/QuestionOne").getChildren()){
                             questoes.add(qSnapShot.getValue(QuestionOne.class));
-                            nomes.add(qSnapShot.getValue(QuestionOne.class).getTitle());
-                            Log.i("Words", qSnapShot.getValue(QuestionOne.class).getTitle());
+                            //nomes.add(qSnapShot.getValue(QuestionOne.class).getTitle());
+                            //Log.i("Words", qSnapShot.getValue(QuestionOne.class).getTitle());
                         }
                     //QuestionOne q = ds.getValue(QuestionOne.class);
                     //provas.add(q);
@@ -75,9 +75,9 @@ public class SearchExam extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent it = new Intent(getApplicationContext(), AnswerQuestionOne.class);
-                it.putExtra("word1", questoes.get(position).getQ1());
-                it.putExtra("word2", questoes.get(position).getQ2());
-                it.putExtra("word3", questoes.get(position).getQ3());
+                //it.putExtra("word1", questoes.get(position).getQ1());
+                //it.putExtra("word2", questoes.get(position).getQ2());
+                //it.putExtra("word3", questoes.get(position).getQ3());
                 startActivity(it);
             }
         });

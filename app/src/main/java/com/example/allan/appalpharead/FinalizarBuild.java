@@ -50,10 +50,10 @@ public class FinalizarBuild extends Activity {
                     q3 = b.getString("word3");
                     title = txtProva.getText().toString();
 
-                    QuestionOne question = new QuestionOne(q1, q2, q3, title);
+        //            QuestionOne question = new QuestionOne(q1, q2, q3, title);
 
                     //salva a prova no firebase
-                    saveTest(question);
+          //          saveTest(question);
 
 
 

@@ -54,13 +54,11 @@ public class BuildQuestionOne extends Activity {
         btnVoltar = findViewById(R.id.btnVoltar);
         btnValidate = findViewById(R.id.btnValidate);
 
-
-
         btnAvancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent it = new Intent(getApplicationContext(), FinalizarBuild.class);
+                Intent it = new Intent(getApplicationContext(), BuildQuestionTwo.class);
 
                 w1 = wordOne.getText().toString();
                 w2 = wordTwo.getText().toString();
@@ -75,8 +73,6 @@ public class BuildQuestionOne extends Activity {
 
                     startActivity(it);
                 }
-
-
             }
         });
     }

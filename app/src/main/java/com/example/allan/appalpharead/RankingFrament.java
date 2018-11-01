@@ -1,7 +1,10 @@
 package com.example.allan.appalpharead;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,33 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-import com.example.allan.appalpharead.models.DicionarioOnline;
-import com.example.allan.appalpharead.models.Entry;
-import com.example.allan.appalpharead.models.Sense;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import static android.app.Activity.RESULT_OK;
 
 public class RankingFrament extends Fragment {
-    private EditText word;
-    private TextView boxResponse;
-    private Button btn;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    private static final Pattern REMOVE_TAGS = Pattern.compile("<.+?>");
+    private ImageView image;
+    private Button btnCamera;
 
     @SuppressLint("WrongViewCast")
     @Nullable
@@ -44,50 +30,27 @@ public class RankingFrament extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
-        word = view.findViewById(R.id.TextT);
-        boxResponse = view.findViewById(R.id.TextRT);
-        btn = view.findViewById(R.id.btnTest);
+        btnCamera = view.findViewById(R.id.btnCamera);
+        image = view.findViewById(R.id.imageView);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://dicionario-aberto.net/") //define a url base
-                            .addConverterFactory(GsonConverterFactory.create()) //define o objeto de converção (Gson)
-                            .build();
-
-                    //retrofit retorna uma classe que implementa DicionarioService(pois este é uma interface e não pode ser instânciada)
-                    DicionarioService service = retrofit.create(DicionarioService.class);
-
-                    //objeto para fazer a chamada
-                    Call<DicionarioOnline> requestDicionario = service.searchWord("search-json/"+word.getText().toString());
-
-                    requestDicionario.enqueue(new Callback<DicionarioOnline>() {
-                        @Override
-                        public void onResponse(Call<DicionarioOnline> call, Response<DicionarioOnline> response) {
-                            if(!response.isSuccessful()) {
-                                boxResponse.setText("Desculpe, essa palavra não foi encontrada, tente outra.");
-                            }else{
-                                //Requisição retornou co sucesso
-                                DicionarioOnline dicionario = response.body();
-                                String ans = "";
-                                Entry e = dicionario.entry;
-                                for(Sense s: e.sense) {
-                                    Matcher m = REMOVE_TAGS.matcher(s.def);
-                                    ans = m.replaceAll(";").split(";")[0];
-                                    break;
-                                }
-                                boxResponse.setText(ans);
-                            }
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
-
-                @Override
-                public void onFailure(Call<DicionarioOnline> call, Throwable t) {
-                    boxResponse.setText("Desculpe, essa palavra não foi encontrada, tente outra.");
-                }
-            });
-        }
+            }
         });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            image.setImageBitmap(imageBitmap);
+        }
     }
 }

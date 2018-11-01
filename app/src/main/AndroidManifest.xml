@@ -36,14 +36,10 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".PaginaPrincipal"
-            android:label="@string/title_activity_pagina_principal"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:label="@string/title_activity_pagina_principal" />
         <activity
             android:name=".MinhasProvas"
             android:label="@string/title_activity_minhas_provas" />
-        <activity
-            android:name=".QuestaoObjeto_1"
-            android:label="@string/title_activity_questao_objeto_1" />
         <activity
             android:name=".BuildQuestionOne"
             android:label="@string/title_activity_build_question_one" />
@@ -60,6 +56,12 @@
         <activity
             android:name=".FinalPoint"
             android:label="@string/title_activity_final_point" />
+        <activity
+            android:name=".BuildQuestionTwo"
+            android:label="@string/title_activity_build_question_two" />
+        <activity
+            android:name=".BuildQuestionThree"
+            android:label="@string/title_activity_build_question_three"></activity>
     </application>
 
 </manifest>

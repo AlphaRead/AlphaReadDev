@@ -8,49 +8,41 @@ import java.util.List;
 
 public class QuestionOne {
 
-    private static int score = 10;
+    private static int score = 3;
 
-    private String questionTitle;
-    private String q1;
-    private String q2;
-    private String q3;
+    private String w1;
+    private String w2;
+    private String w3;
 
-    public QuestionOne(String q1, String q2, String q3, String title){
-        this.q1 = q1;
-        this.q2 = q2;
-        this.q3 = q3;
-        this.questionTitle = title;
+    public QuestionOne(String w1, String w2, String w3){
+        this.w1 = w1;
+        this.w2 = w2;
+        this.w3 = w3;
     }
 
-    public QuestionOne(){};
-
-    public String getTitle(){
-        return this.questionTitle;
+    public static int getScore() {
+        return score;
     }
-    public String getQ1(){
-        return this.q1;
+    public String getW1() {
+        return w1;
     }
-    public String getQ2(){
-        return this.q2;
+    public String getW2() {
+        return w2;
     }
-    public String getQ3(){
-        return this.q3;
-    }
-    public int getScore(){
-        return this.score;
+    public String getW3() {
+        return w3;
     }
 
-    public void setTitle(String title){
-        this.questionTitle = title;
+    public static void setScore(int score) {
+        QuestionOne.score = score;
     }
-    public void setQ1(String q1){
-        this.q1 = q1;
+    public void setW1(String w1) {
+        this.w1 = w1;
     }
-    public void setQ2(String q2){
-        this.q2 = q2;
+    public void setW2(String w2) {
+        this.w2 = w2;
     }
-    public void setQ3(String q3){
-        this.q3 = q3;
+    public void setW3(String w3) {
+        this.w3 = w3;
     }
-
 }
