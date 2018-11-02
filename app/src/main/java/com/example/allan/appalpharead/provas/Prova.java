@@ -5,17 +5,17 @@ public class Prova {
     private QuestionOne _q1;
     private QuestionTwo _q2;
     private QuestionThree _q3;
+    private QuestionFour _q4;
     private User user;
 
     private String questionTitle;
 
     Prova(){}
 
-    public Prova(QuestionOne q1, QuestionTwo q2, QuestionThree q3, User user, String questionTitle){
+    public Prova(QuestionOne q1, QuestionTwo q2, QuestionFour q4, String questionTitle){
         this._q1 = q1;
         this._q2 = q2;
-        this._q3 = q3;
-        this.user = user;
+        this._q4 = q4;
         this.questionTitle = questionTitle;
     }
 
@@ -27,6 +27,9 @@ public class Prova {
     }
     public QuestionThree get_q3() {
         return _q3;
+    }
+    public QuestionFour get_q4() {
+        return _q4;
     }
     public User getUser() {
         return user;
@@ -43,6 +46,9 @@ public class Prova {
     }
     public void set_q3(QuestionThree _q3) {
         this._q3 = _q3;
+    }
+    public void set_q4(QuestionFour _q4) {
+        this._q4 = _q4;
     }
     public void setUser(User user) {
         this.user = user;

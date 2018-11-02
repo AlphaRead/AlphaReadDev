@@ -1,7 +1,7 @@
 package com.example.allan.appalpharead.provas;
 
 public class QuestionFour {
-    private static int score = 3;
+    private static int score = 1;
 
     private String frase;
 

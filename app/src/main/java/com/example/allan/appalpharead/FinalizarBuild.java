@@ -29,8 +29,6 @@ public class FinalizarBuild extends Activity {
     private EditText txtProva;
     private Button btnSalvar;
 
-    private String title;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,16 +44,17 @@ public class FinalizarBuild extends Activity {
                 txtProva = findViewById(R.id.txtProva);
                 if(b != null || !TextUtils.isEmpty(txtProva.getText().toString())){
 
-                    title = txtProva.getText().toString();
-
                     QuestionOne question1 = new QuestionOne(b.getString("word1"), b.getString("word1"), b.getString("word1"));
                     QuestionTwo question2 = new QuestionTwo(b.getString("word"));
                     //QuestionThree question3 = new QuestionThree(b.getString("name"), b.getString("picture"));
                     QuestionFour question4 = new QuestionFour(b.getString("frase"));
+
+                    //User user = new User(<nome da pessoa>, txtProva.getText().toString());
+
+                    Prova prova = new Prova(question1, question2, question4, txtProva.getText().toString());
+
                     //salva a prova no firebase
-          //          saveTest(question);
-
-
+                    saveTest(prova);
 
                     Toast.makeText(getApplicationContext(), "Prova salva com sucesso", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), PaginaPrincipal.class));
@@ -67,15 +66,15 @@ public class FinalizarBuild extends Activity {
 
     }
 
-    public void saveTest(QuestionOne q) {
+    public void saveTest(Prova p) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getUid();
 
-        DatabaseReference refProva = database.getReference("/Users/"+uid+"/Provas/QuestionOne/");
+        DatabaseReference refProva = database.getReference("/Users/"+uid+"/Provas/");
         String provaID = refProva.push().getKey();
 
-        refProva.child(provaID).setValue(q);
+        refProva.child(provaID).setValue(p);
     }
 
 }
