@@ -33,7 +33,7 @@ public class ProvaFrament extends Fragment {
         btnBuild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getContext(), BuildQuestionThree.class);
+                Intent it = new Intent(getContext(), BuildQuestionOne.class);
                 startActivity(it);
             }
         });

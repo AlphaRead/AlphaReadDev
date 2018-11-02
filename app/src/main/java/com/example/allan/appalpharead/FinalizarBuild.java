@@ -12,7 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.allan.appalpharead.provas.Prova;
+import com.example.allan.appalpharead.provas.QuestionFour;
 import com.example.allan.appalpharead.provas.QuestionOne;
+import com.example.allan.appalpharead.provas.QuestionThree;
+import com.example.allan.appalpharead.provas.QuestionTwo;
 import com.example.allan.appalpharead.provas.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -23,12 +26,10 @@ import java.util.List;
 
 public class FinalizarBuild extends Activity {
 
-    EditText txtProva;
-    Button btnSalvar;
+    private EditText txtProva;
+    private Button btnSalvar;
 
-
-
-    String q1, q2, q3, title;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +43,15 @@ public class FinalizarBuild extends Activity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //txtProva = findViewById(R.id.txtProva);
+                txtProva = findViewById(R.id.txtProva);
                 if(b != null || !TextUtils.isEmpty(txtProva.getText().toString())){
 
-                    q1 = b.getString("word1");
-                    q2 = b.getString("word2");
-                    q3 = b.getString("word3");
                     title = txtProva.getText().toString();
 
-        //            QuestionOne question = new QuestionOne(q1, q2, q3, title);
-
+                    QuestionOne question1 = new QuestionOne(b.getString("word1"), b.getString("word1"), b.getString("word1"));
+                    QuestionTwo question2 = new QuestionTwo(b.getString("word"));
+                    //QuestionThree question3 = new QuestionThree(b.getString("name"), b.getString("picture"));
+                    QuestionFour question4 = new QuestionFour(b.getString("frase"));
                     //salva a prova no firebase
           //          saveTest(question);
 

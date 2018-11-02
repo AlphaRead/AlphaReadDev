@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 
 public interface PythonService {
 
-    @POST("/")
+    @POST("/image")
     Call<Data> postImage(@Body RequestBody requestBody);
 
 }

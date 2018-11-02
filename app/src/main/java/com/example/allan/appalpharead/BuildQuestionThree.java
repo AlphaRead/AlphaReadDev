@@ -5,19 +5,18 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Activity;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.allan.appalpharead.models.Data;
-import com.example.allan.appalpharead.models.DicionarioOnline;
-import com.google.android.gms.common.api.Api;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -31,7 +30,8 @@ public class BuildQuestionThree extends Activity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    private Button btnAvancar;
+    private Button btnAvancar, btnCamera;
+    private EditText txtName;
     private ImageView image;
 
     @Override
@@ -39,16 +39,40 @@ public class BuildQuestionThree extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_question_three);
 
-        btnAvancar = findViewById(R.id.btnCamera);
-        image = findViewById(R.id.imageView);
+        final Bundle b = getIntent().getExtras();
 
-        btnAvancar.setOnClickListener(new View.OnClickListener() {
+        btnAvancar = findViewById(R.id.btnAvancar);
+        btnCamera = findViewById(R.id.btnCamera);
+        image = findViewById(R.id.imageView);
+        txtName = findViewById(R.id.txtName);
+
+        btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getApplicationContext().getPackageManager()) != null) {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
+            }
+        });
+
+        btnAvancar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(txtName.getText().toString())) {
+                    Intent it = new Intent(getApplicationContext(), BuildQuestionFour.class);
+
+                    it.putExtra("word1", b.getString("word1"));
+                    it.putExtra("word2", b.getString("word3"));
+                    it.putExtra("word3", b.getString("word2"));
+                    it.putExtra("word", b.getString("word"));
+                    //it.putExtra("picture", image.getImageMatrix());
+                    it.putExtra("name", txtName.getText().toString());
+
+                    startActivity(it);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Favor preencher todos os campos!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -65,8 +89,6 @@ public class BuildQuestionThree extends Activity {
 
             String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-            Log.i("Base64", encoded);
-
             this.imageRecognition(encoded);
 
             image.setImageBitmap(imageBitmap);
@@ -75,13 +97,13 @@ public class BuildQuestionThree extends Activity {
 
     protected void imageRecognition(String base64){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.27.2.137:5000/")
+                .baseUrl("http://192.168.100.6:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         PythonService api = retrofit.create(PythonService.class);
 
-        String json = "{\"data\": \"bbb\"}";
+        String json = "{\"image\": "+ base64 +"\"}";
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 

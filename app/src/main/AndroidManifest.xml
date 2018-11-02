@@ -61,7 +61,10 @@
             android:label="@string/title_activity_build_question_two" />
         <activity
             android:name=".BuildQuestionThree"
-            android:label="@string/title_activity_build_question_three"></activity>
+            android:label="@string/title_activity_build_question_three" />
+        <activity
+            android:name=".BuildQuestionFour"
+            android:label="@string/title_activity_build_question_four"></activity>
     </application>
 
 </manifest>
