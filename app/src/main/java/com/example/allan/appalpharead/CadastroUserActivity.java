@@ -37,8 +37,6 @@ public class CadastroUserActivity extends AppCompatActivity {
                 submitUserProfile();
             }
         });
-
-
     }
 
     public void submitUserProfile(){

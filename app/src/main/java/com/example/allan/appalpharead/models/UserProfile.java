@@ -1,9 +1,12 @@
 package com.example.allan.appalpharead.models;
 
+
 public class UserProfile {
     private String nome;
     private String sobrenome;
     private int score;
+
+    UserProfile(){}
 
     //Construtor para usuários novos score é inicializado com 0
     public UserProfile(String nome, String sobrenome) {

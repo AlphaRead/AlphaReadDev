@@ -2,27 +2,32 @@ package com.example.allan.appalpharead.provas;
 
 public class User {
 
-    private String name, nameProva;
+    private String nome, sobrenome;
+    private Integer score;
 
-    public User(String name, String nameProva) {
-        this.name = name;
-        this.nameProva = nameProva;
+    public User(String nome, String sobrenome) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.score = 0;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
+    }
+    public String getSobrenome() {
+        return sobrenome;
+    }
+    public Integer getScore() {
+        return score;
     }
 
-    public String getNameProva() {
-        return nameProva;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
-
-    public void setNameProva(String nameProva) {
-        this.nameProva = nameProva;
+    public void setScore(Integer score) {
+        this.score = score;
     }
-
 }

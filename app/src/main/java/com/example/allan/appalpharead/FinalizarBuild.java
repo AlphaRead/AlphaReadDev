@@ -16,7 +16,6 @@ import com.example.allan.appalpharead.provas.QuestionFour;
 import com.example.allan.appalpharead.provas.QuestionOne;
 import com.example.allan.appalpharead.provas.QuestionThree;
 import com.example.allan.appalpharead.provas.QuestionTwo;
-import com.example.allan.appalpharead.provas.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

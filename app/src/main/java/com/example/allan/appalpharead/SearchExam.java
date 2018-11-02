@@ -10,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.allan.appalpharead.provas.Prova;
-import com.example.allan.appalpharead.provas.QuestionOne;
-import com.example.allan.appalpharead.provas.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +32,7 @@ public class SearchExam extends Activity {
         listExam = findViewById(R.id.listExam);
 
         nomes = new ArrayList<>();
-        final ArrayList<QuestionOne> questoes = new ArrayList<>();
+        final ArrayList<Prova> provas = new ArrayList<>();
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getUid();
@@ -43,29 +41,22 @@ public class SearchExam extends Activity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, nomes);
 
         refProva.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                        for (DataSnapshot qSnapShot : ds.child("Provas/QuestionOne").getChildren()){
-                            questoes.add(qSnapShot.getValue(QuestionOne.class));
-                            //nomes.add(qSnapShot.getValue(QuestionOne.class).getTitle());
-                            //Log.i("Words", qSnapShot.getValue(QuestionOne.class).getTitle());
-                        }
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    for (DataSnapshot qSnapShot : ds.child("Provas").getChildren()){
+                        provas.add(qSnapShot.getValue(Prova.class));
+                        //nomes.add(qSnapShot.getValue(QuestionOne.class).getTitle());
+                        //Log.i("Words", qSnapShot.getValue(QuestionOne.class).getTitle());
+                    }
                     //QuestionOne q = ds.getValue(QuestionOne.class);
                     //provas.add(q);
-                        Log.d("myTag", ds.getValue(Prova.class).toString());
-
+                    Log.d("myTag", ds.getValue(Prova.class).toString());
                 }
-                        listExam.setAdapter(arrayAdapter);
-
-                    }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+                listExam.setAdapter(arrayAdapter);
             }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
        // ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, nomes);
@@ -92,13 +83,13 @@ public class SearchExam extends Activity {
 
         nomes.add(nome);
 
-        //return new Prova(new QuestionOne(words), new User(nome, prova));
+        //return new Prova(new QuestionOne(words));
     }
 /*
     private Prova adicionaProva(QuestionOne q1, String nome, String prova){
         nomes.add(nome);
 
-        return new Prova(q1, new User(nome, prova));
+        return new Prova(q1);
     }*/
 
 

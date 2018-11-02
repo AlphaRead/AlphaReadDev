@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         registar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getApplicationContext(), Registrar.class);
-                startActivity(it);
+            Intent it = new Intent(getApplicationContext(), Registrar.class);
+            startActivity(it);
             }
         });
 
@@ -107,17 +107,14 @@ public class MainActivity extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (!dataSnapshot.hasChild(uid)) {
                                         startActivity(new Intent(MainActivity.this, CadastroUserActivity.class));
-                                        //Toast.makeText(getApplicationContext(), "É preciso se informar seus daados antes de usar o aplicativo!", Toast.LENGTH_LONG).show();
+                                        //Toast.makeText(getApplicationContext(), "É preciso se informar seus dados antes de usar o aplicativo!", Toast.LENGTH_LONG).show();
                                     }else{
                                         Intent it = new Intent(getApplicationContext(), PaginaPrincipal.class);
                                         startActivity(it);
                                     }
                                 }
-
                                 @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
+                                public void onCancelled(DatabaseError databaseError) {}
                             });
 
 

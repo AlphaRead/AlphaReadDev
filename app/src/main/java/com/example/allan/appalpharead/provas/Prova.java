@@ -6,7 +6,6 @@ public class Prova {
     private QuestionTwo _q2;
     private QuestionThree _q3;
     private QuestionFour _q4;
-    private User user;
 
     private String questionTitle;
 
@@ -31,9 +30,6 @@ public class Prova {
     public QuestionFour get_q4() {
         return _q4;
     }
-    public User getUser() {
-        return user;
-    }
     public String getQuestionTitle() {
         return questionTitle;
     }
@@ -49,9 +45,6 @@ public class Prova {
     }
     public void set_q4(QuestionFour _q4) {
         this._q4 = _q4;
-    }
-    public void setUser(User user) {
-        this.user = user;
     }
     public void setQuestionTitle(String questionTitle) {
         this.questionTitle = questionTitle;

@@ -17,21 +17,26 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Registrar extends Activity {
-    EditText email,username,password,celular;
+    private EditText email,username,password,celular;
+    private Button registrar;
 
-    Button registrar;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
+
         mAuth = FirebaseAuth.getInstance();
+
         email = findViewById(R.id.Email_registrar);
         username = findViewById(R.id.Username_registrar);
         password = findViewById(R.id.Password_registrar);
         celular = findViewById(R.id.Celular_registrar);
         registrar = findViewById(R.id.Registrar_registrar);
+
         Button voltar = findViewById(R.id.Voltar_registrar);
+
         voltar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -56,7 +61,6 @@ public class Registrar extends Activity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("log", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(Registrar.this, "Authentication success.", Toast.LENGTH_SHORT).show();
                         }

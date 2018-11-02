@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.allan.appalpharead.models.UserProfile;
+import com.example.allan.appalpharead.provas.Prova;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,15 +33,42 @@ import java.net.URL;
 
 public class PerfilFrament extends Fragment {
 
-    private Button btnSeguindo, btnMinhasProvas;
+    private FirebaseAuth mAuth;
+
+    private Button btnMinhasProvas;
+    private TextView name, score;
 
     @SuppressLint("WrongViewCast")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+        final View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        btnMinhasProvas = (Button) view.findViewById(R.id.btn_minhas_provas_perfil);
+        btnMinhasProvas =  view.findViewById(R.id.btn_minhas_provas_perfil);
+        name = view.findViewById(R.id.name_perfil);
+        score = view.findViewById(R.id.score);
+
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refProva = database.getReference("Users/");
+
+        refProva.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    for (DataSnapshot qSnapShot : ds.child("UserProfile").getChildren()){
+                        if(qSnapShot.getKey().equals(user.getUid())){
+                            name.setText(qSnapShot.getValue(UserProfile.class).getNome() + " " + qSnapShot.getValue(UserProfile.class).getSobrenome());
+                            score.setText(Integer.toString(qSnapShot.getValue(UserProfile.class).getScore()));
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
         btnMinhasProvas.setOnClickListener(new View.OnClickListener() {
             @Override
