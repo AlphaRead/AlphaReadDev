@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (!dataSnapshot.hasChild(uid)) {
                                         startActivity(new Intent(MainActivity.this, CadastroUserActivity.class));
-                                        //Toast.makeText(getApplicationContext(), "É preciso se informar seus dados antes de usar o aplicativo!", Toast.LENGTH_LONG).show();
                                     }else{
                                         Intent it = new Intent(getApplicationContext(), PaginaPrincipal.class);
                                         startActivity(it);

@@ -52,7 +52,9 @@
         <activity
             android:name=".AnswerQuestionOne"
             android:label="@string/title_activity_answer_question_one" />
-        <activity android:name=".CadastroUserActivity" />
+        <activity
+            android:name=".CadastroUserActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".FinalPoint"
             android:label="@string/title_activity_final_point" />

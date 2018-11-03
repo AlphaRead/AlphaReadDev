@@ -4,20 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.allan.appalpharead.models.UserProfile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Registrar extends Activity {
-    private EditText email,username,password,celular;
+
+    private EditText email,password;
     private Button registrar;
 
     private FirebaseAuth mAuth;
@@ -30,42 +35,29 @@ public class Registrar extends Activity {
         mAuth = FirebaseAuth.getInstance();
 
         email = findViewById(R.id.Email_registrar);
-        username = findViewById(R.id.Username_registrar);
         password = findViewById(R.id.Password_registrar);
-        celular = findViewById(R.id.Celular_registrar);
         registrar = findViewById(R.id.Registrar_registrar);
 
-        Button voltar = findViewById(R.id.Voltar_registrar);
-
-        voltar.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent it = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(it);
-            }
-        });
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailStr = (String) email.getText().toString();
-                String senhaStr = (String) password.getText().toString();
-
-                registrar(emailStr,senhaStr);
+                if (!TextUtils.isEmpty(email.getText().toString()) && !TextUtils.isEmpty(password.getText().toString())) {
+                    registrar(email.getText().toString(), password.getText().toString());
+                }else{
+                    Toast.makeText(getApplicationContext(), "Favor preencher todos os campos!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
     public void registrar (String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(Registrar.this, "Authentication success.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    startActivity(new Intent(Registrar.this, CadastroUserActivity.class));
+                }
+                }
+            });
     }
-
 }

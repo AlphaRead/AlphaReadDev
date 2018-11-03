@@ -3,9 +3,11 @@ package com.example.allan.appalpharead;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.allan.appalpharead.models.UserProfile;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,15 +45,17 @@ public class CadastroUserActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
+        if (!TextUtils.isEmpty(username.getText().toString()) && !TextUtils.isEmpty(lastname.getText().toString())) {
+            name = username.getText().toString().trim();
+            lname = lastname.getText().toString().trim();
+            DatabaseReference users = database.getReference("/Users/" + uid + "/UserProfile");
 
-        name = username.getText().toString().trim();
-        lname = lastname.getText().toString().trim();
+            UserProfile user_insert = new UserProfile(name, lname);
+            users.child(uid).setValue(user_insert);
 
-        DatabaseReference users = database.getReference("/Users/"+uid+"/UserProfile");
-
-        UserProfile user_insert = new UserProfile(name, lname);
-        users.child(uid).setValue(user_insert);
-
-        startActivity(new Intent(CadastroUserActivity.this, PaginaPrincipal.class));
+            startActivity(new Intent(CadastroUserActivity.this, PaginaPrincipal.class));
+        }else{
+            Toast.makeText(getApplicationContext(), "Favor preencher todos os campos!", Toast.LENGTH_LONG).show();
+        }
     }
 }
