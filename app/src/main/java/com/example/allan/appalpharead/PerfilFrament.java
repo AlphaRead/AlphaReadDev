@@ -1,11 +1,15 @@
 package com.example.allan.appalpharead;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,11 +42,16 @@ public class PerfilFrament extends Fragment {
     private Button btnMinhasProvas;
     private TextView name, score;
 
+    private Context context;
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
+
     @SuppressLint("WrongViewCast")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        context = view.getContext();
 
         btnMinhasProvas =  view.findViewById(R.id.btn_minhas_provas_perfil);
         name = view.findViewById(R.id.name_perfil);
@@ -70,6 +79,8 @@ public class PerfilFrament extends Fragment {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+        verificationPermissions();
+
         btnMinhasProvas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,5 +90,11 @@ public class PerfilFrament extends Fragment {
         });
 
         return view;
+    }
+
+    private void verificationPermissions(){
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+        }
     }
 }

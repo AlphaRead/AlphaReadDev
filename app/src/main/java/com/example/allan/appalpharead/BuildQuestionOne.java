@@ -1,5 +1,6 @@
 package com.example.allan.appalpharead;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -31,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BuildQuestionOne extends Activity {
 
-    private Button btnAvancar, btnVoltar, btnValidate;
+    private Button btnAvancar, btnCancel;
     private EditText wordOne, wordTwo, wordThree;
     private String ans;
 
@@ -51,8 +52,32 @@ public class BuildQuestionOne extends Activity {
         wordThree = findViewById(R.id.word3);
 
         btnAvancar = findViewById(R.id.btnAvancar);
-        btnVoltar = findViewById(R.id.btnVoltar);
-        btnValidate = findViewById(R.id.btnValidate);
+        btnCancel = findViewById(R.id.btnCancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(BuildQuestionOne.this);
+                alert.setTitle("Tem certeza de que deseja sair?");
+                alert
+                        .setMessage("Todo o progresso nesta construção de prova será perdido.")
+                        .setIcon(R.drawable.notification)
+                        .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(new Intent(BuildQuestionOne.this, PaginaPrincipal.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
+                android.app.AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
+            }
+        });
 
         btnAvancar.setOnClickListener(new View.OnClickListener() {
             @Override

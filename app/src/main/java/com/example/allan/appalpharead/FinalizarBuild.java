@@ -57,6 +57,7 @@ public class FinalizarBuild extends Activity {
 
                     Toast.makeText(getApplicationContext(), "Prova salva com sucesso", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getApplicationContext(), PaginaPrincipal.class));
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "Campo obrigatório", Toast.LENGTH_LONG).show();
                 }

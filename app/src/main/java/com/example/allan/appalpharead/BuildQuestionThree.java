@@ -1,5 +1,6 @@
 package com.example.allan.appalpharead;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class BuildQuestionThree extends Activity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    private Button btnAvancar, btnCamera;
+    private Button btnAvancar, btnCamera, btnCancel;
     private EditText txtName;
     private ImageView image;
 
@@ -45,6 +46,30 @@ public class BuildQuestionThree extends Activity {
         btnCamera = findViewById(R.id.btnCamera);
         image = findViewById(R.id.imageView);
         txtName = findViewById(R.id.txtName);
+        btnCancel = findViewById(R.id.btnCancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(BuildQuestionThree.this);
+                alert.setTitle("Tem certeza de que deseja sair?");
+                alert
+                        .setMessage("Todo o progresso nesta construção de prova será perdido.")
+                        .setIcon(R.drawable.notification)
+                        .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(new Intent(BuildQuestionThree.this, PaginaPrincipal.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                android.app.AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
+            }
+        });
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override

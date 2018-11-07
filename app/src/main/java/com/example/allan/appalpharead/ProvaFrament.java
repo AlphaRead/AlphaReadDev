@@ -1,18 +1,23 @@
 package com.example.allan.appalpharead;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.Manifest;
 
 public class ProvaFrament extends Fragment {
 
     private Button btnSearch, btnBuild;
+
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     @Nullable
     @Override
@@ -33,8 +38,12 @@ public class ProvaFrament extends Fragment {
         btnBuild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getContext(), BuildQuestionOne.class);
-                startActivity(it);
+                if (ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+                } else {
+                    Intent it = new Intent(getContext(), BuildQuestionOne.class);
+                    startActivity(it);
+                }
             }
         });
 
