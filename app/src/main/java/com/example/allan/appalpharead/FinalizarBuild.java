@@ -1,5 +1,6 @@
 package com.example.allan.appalpharead;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -26,7 +27,7 @@ import java.util.List;
 public class FinalizarBuild extends Activity {
 
     private EditText txtProva;
-    private Button btnSalvar;
+    private Button btnSalvar, btnCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,32 @@ public class FinalizarBuild extends Activity {
         final Bundle b = getIntent().getExtras();
         btnSalvar = findViewById(R.id.btnSalvar);
         txtProva = findViewById(R.id.txtProva);
+        btnCancel = findViewById(R.id.btnCancel);
 
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(FinalizarBuild.this);
+                alert.setTitle("Tem certeza de que deseja sair?");
+                alert
+                        .setMessage("Todo o progresso nesta construção de prova será perdido.")
+                        .setIcon(R.drawable.notification)
+                        .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(new Intent(FinalizarBuild.this, PaginaPrincipal.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
+                android.app.AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
+            }
+        });
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
