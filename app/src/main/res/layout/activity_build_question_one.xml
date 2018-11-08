@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuildQuestionOne"
-    android:background="#ddd">
+    tools:context=".BuildQuestionOne">
 
     <EditText
         android:id="@+id/word2"
         android:layout_width="295dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
         android:drawableStart="@drawable/pen"
+        android:ems="10"
         android:inputType="textPersonName"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,15 +56,14 @@
 
     <Button
         android:id="@+id/btnAvancar"
-        android:layout_width="176dp"
-        android:layout_height="63dp"
+        android:layout_width="101dp"
+        android:layout_height="96dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="92dp"
-        android:background="@drawable/button_layout"
-        android:text="AVANÇAR"
+        android:background="@drawable/arrow2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintHorizontal_bias="0.73"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/word1" />
 
@@ -74,16 +72,16 @@
         android:layout_width="205dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="84dp"
         android:text="Significados"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.714"
-        app:layout_constraintStart_toEndOf="@+id/btnCancel"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/textView8"
@@ -102,15 +100,26 @@
 
     <Button
         android:id="@+id/btnCancel"
-        android:layout_width="43dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:background="#ddd"
-        android:text="X"
+        android:layout_width="41dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cancel"
         android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="319dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/line1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnCancel"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
