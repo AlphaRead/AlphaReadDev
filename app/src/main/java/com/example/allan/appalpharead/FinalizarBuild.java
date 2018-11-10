@@ -29,10 +29,18 @@ public class FinalizarBuild extends Activity {
     private EditText txtProva;
     private Button btnSalvar, btnCancel;
 
+    private String uid;
+    private FirebaseDatabase database;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finalizar_build);
+
+        database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getUid();
 
         final Bundle b = getIntent().getExtras();
         btnSalvar = findViewById(R.id.btnSalvar);
@@ -76,7 +84,7 @@ public class FinalizarBuild extends Activity {
 
                     //User user = new User(<nome da pessoa>, txtProva.getText().toString());
 
-                    Prova prova = new Prova(question1, question2, question4, txtProva.getText().toString());
+                    Prova prova = new Prova(question1, question2, question4, txtProva.getText().toString(), uid);
 
                     //salva a prova no firebase
                     saveTest(prova);
@@ -93,13 +101,8 @@ public class FinalizarBuild extends Activity {
     }
 
     public void saveTest(Prova p) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String uid = mAuth.getUid();
-
         DatabaseReference refProva = database.getReference("/Users/"+uid+"/Provas/");
         String provaID = refProva.push().getKey();
-
         refProva.child(provaID).setValue(p);
     }
 

@@ -38,6 +38,7 @@ import java.net.URL;
 public class PerfilFrament extends Fragment {
 
     private FirebaseAuth mAuth;
+    private String uid;
 
     private Button btnMinhasProvas;
     private TextView name, score;
@@ -58,21 +59,19 @@ public class PerfilFrament extends Fragment {
         score = view.findViewById(R.id.score);
 
         mAuth = FirebaseAuth.getInstance();
+        uid = mAuth.getUid();
+
         final FirebaseUser user = mAuth.getCurrentUser();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference refProva = database.getReference("Users/");
+        DatabaseReference refProva = database.getReference("Users/"+uid+"/UserProfile/");
 
         refProva.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    for (DataSnapshot qSnapShot : ds.child("UserProfile").getChildren()){
-                        if(qSnapShot.getKey().equals(user.getUid())){
-                            name.setText(qSnapShot.getValue(UserProfile.class).getNome() + " " + qSnapShot.getValue(UserProfile.class).getSobrenome());
-                            score.setText(Integer.toString(qSnapShot.getValue(UserProfile.class).getScore()));
-                        }
-                    }
+                    name.setText(ds.child("nome").getValue().toString() + " " + ds.child("sobrenome").getValue().toString());
+                    score.setText(ds.child("score").getValue().toString());
                 }
             }
             @Override

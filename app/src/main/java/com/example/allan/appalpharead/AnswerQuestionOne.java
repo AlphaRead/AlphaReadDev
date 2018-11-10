@@ -15,6 +15,12 @@ import android.widget.Toast;
 import com.example.allan.appalpharead.models.DicionarioOnline;
 import com.example.allan.appalpharead.models.Entry;
 import com.example.allan.appalpharead.models.Sense;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -37,7 +43,10 @@ public class AnswerQuestionOne extends Activity {
 
     private Context context;
 
-    ArrayList<String> q;
+    private FirebaseDatabase mDatabase;
+    private FirebaseAuth mAuth;
+
+    private ArrayList<String> q;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +65,6 @@ public class AnswerQuestionOne extends Activity {
         words = findViewById(R.id.words);
         String text = "Palavras: ";
         text = text.concat(q.get(0).concat(", ")).concat(q.get(1).concat(", ")).concat(q.get(2));
-        Log.i("Words", text);
         words.setText(text);
 
         sig1 = findViewById(R.id.sig1);
@@ -74,10 +82,18 @@ public class AnswerQuestionOne extends Activity {
                 ans1 = findViewById(R.id.ans1);
                 ans2 = findViewById(R.id.ans2);
                 ans3 = findViewById(R.id.ans3);
+
                 int point = avaliate(ans1.getText().toString(), ans2.getText().toString(), ans3.getText().toString());
-                String i = Integer.toString(point);
+
                 Intent it = new Intent(context, FinalPoint.class);
-                it.putExtra("Point", i);
+
+                it.putExtra("Point", Integer.toString(point));
+                it.putExtra("uid", bundle.getString("uid"));
+                it.putExtra("userScore", bundle.getString("userScore"));
+                Log.i("myTag", "Answer: " + bundle.getString("userScore"));
+                it.putExtra("score", bundle.getString("score"));
+                it.putExtra("userUid", bundle.getString("userUid"));
+
                 startActivity(it);
                 finish();
             }

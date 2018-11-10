@@ -30,6 +30,7 @@ public class SearchExam extends Activity {
 
     private ArrayList<String> titles, points, uid;
     private ArrayList<Prova> prova;
+    private String myScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,12 @@ public class SearchExam extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    for (DataSnapshot pSnapShot : ds.child("Provas").getChildren()){
+                    myScore = "";
+                    for (DataSnapshot uSnapShot: ds.child("UserProfile").getChildren()) {
+                        myScore = uSnapShot.child("score").getValue().toString();
+                    }
+
+                    for (DataSnapshot pSnapShot : ds.child("Provas").getChildren()) {
                         titles.add(pSnapShot.child("questionTitle").getValue().toString());
                         points.add(pSnapShot.child("score").getValue().toString());
                         uid.add(pSnapShot.getKey());
@@ -61,18 +67,15 @@ public class SearchExam extends Activity {
                                 pSnapShot.child("_q1").child("w2").getValue().toString(),
                                 pSnapShot.child("_q1").child("w3").getValue().toString());
 
-                        Log.i("myTag", q1.getW1());
-                        Log.i("myTag", q1.getW2());
-                        Log.i("myTag", q1.getW3());
-
                         QuestionTwo q2 = new QuestionTwo(pSnapShot.child("_q2").child("word").getValue().toString());
 
                         QuestionFour q4 = new QuestionFour(pSnapShot.child("_q4").child("frase").getValue().toString());
 
-                        Prova p = new Prova(q1, q2, q4, pSnapShot.child("questionTitle").getValue().toString());
+                        Prova p = new Prova(q1, q2, q4, pSnapShot.child("questionTitle").getValue().toString(), pSnapShot.child("userUid").getValue().toString());
+                        p.setScore(Integer.valueOf(pSnapShot.child("score").getValue().toString()));
                         prova.add(p);
 
-                        initRecyclerView();
+                        if (!myScore.equals("")) initRecyclerView();
                     }
                 }
             }
@@ -83,7 +86,7 @@ public class SearchExam extends Activity {
 
    private void initRecyclerView(){
         RecyclerView rv = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(prova, uid, titles, points, this);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(myScore, prova, uid, titles, points, this);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
