@@ -9,87 +9,70 @@
     <TextView
         android:id="@+id/sig3"
         android:layout_width="348dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="51dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ans3" />
 
     <EditText
         android:id="@+id/ans3"
-        android:layout_width="178dp"
-        android:layout_height="33dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="295dp"
+        android:layout_height="37dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/pen"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sig2" />
 
     <EditText
         android:id="@+id/ans2"
-        android:layout_width="178dp"
-        android:layout_height="33dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="295dp"
+        android:layout_height="38dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/pen"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sig1" />
 
     <TextView
-        android:id="@+id/Title"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Questão 1"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/words"
         android:layout_width="349dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_height="26dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Significados :"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/words" />
-
-    <TextView
-        android:id="@+id/words"
-        android:layout_width="349dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/sig2"
         android:layout_width="348dp"
-        android:layout_height="72dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ans2" />
@@ -97,48 +80,97 @@
     <TextView
         android:id="@+id/sig1"
         android:layout_width="348dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="51dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ans1" />
 
     <EditText
         android:id="@+id/ans1"
-        android:layout_width="178dp"
-        android:layout_height="33dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="295dp"
+        android:layout_height="37dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/pen"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/words" />
 
     <Button
         android:id="@+id/btnAvancar"
-        android:layout_width="114dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:layout_marginTop="12dp"
-        android:text="Avançar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sig3" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_width="101dp"
+        android:layout_height="96dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:text="Voltar"
-        app:layout_constraintEnd_toStartOf="@+id/btnAvancar"
+        android:layout_marginEnd="92dp"
+        android:background="@drawable/arrow2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.732"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sig3" />
+
+    <TextView
+        android:id="@+id/txtans"
+        android:layout_width="205dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="84dp"
+        android:text="Significados"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="340dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="Relacione as palavras a seus significados"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtans" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="41dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cancel"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="319dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/line1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnCancel"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

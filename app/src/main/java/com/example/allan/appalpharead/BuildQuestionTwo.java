@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,8 +61,8 @@ public class BuildQuestionTwo extends Activity {
                     Intent it = new Intent(getApplicationContext(), BuildQuestionThree.class);
 
                     it.putExtra("word1", b.getString("word1"));
-                    it.putExtra("word2", b.getString("word3"));
-                    it.putExtra("word3", b.getString("word2"));
+                    it.putExtra("word2", b.getString("word2"));
+                    it.putExtra("word3", b.getString("word3"));
                     it.putExtra("word", word.getText().toString());
 
                     startActivity(it);

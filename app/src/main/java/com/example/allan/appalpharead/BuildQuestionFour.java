@@ -58,8 +58,8 @@ public class BuildQuestionFour extends Activity {
                     Intent it = new Intent(getApplicationContext(), FinalizarBuild.class);
 
                     it.putExtra("word1", b.getString("word1"));
-                    it.putExtra("word2", b.getString("word3"));
-                    it.putExtra("word3", b.getString("word2"));
+                    it.putExtra("word2", b.getString("word2"));
+                    it.putExtra("word3", b.getString("word3"));
                     it.putExtra("word", b.getString("word"));
                     //it.putExtra("picture", b.getString("picture"));
                     it.putExtra("name", b.getString("name"));

@@ -6,9 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="10"
+    android:background="@color/colorPrimary">
 
-    <ImageView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_rank"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        tools:layout="@layout/row_layout" />
+
+   <!-- <ImageView
     android:id="@+id/imageView"
     android:layout_weight="9"
     android:layout_width="match_parent"
@@ -21,6 +32,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_dark"
         android:textColor="@android:color/white"
-        android:text="Open Camera"/>
+        android:text="Open Camera"/> -->
 
 </LinearLayout>

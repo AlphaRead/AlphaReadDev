@@ -47,6 +47,7 @@ public class AnswerQuestionOne extends Activity {
         this.context = getApplicationContext();
 
         bundle = getIntent().getExtras();
+
         q = new ArrayList<>();
         q.add(bundle.getString("word1"));
         q.add(bundle.getString("word2"));
@@ -75,15 +76,23 @@ public class AnswerQuestionOne extends Activity {
                 ans3 = findViewById(R.id.ans3);
                 int point = avaliate(ans1.getText().toString(), ans2.getText().toString(), ans3.getText().toString());
                 String i = Integer.toString(point);
-                Log.i("Words", i);
                 Intent it = new Intent(context, FinalPoint.class);
                 it.putExtra("Point", i);
                 startActivity(it);
+                finish();
             }
 
             private int avaliate(String ans1, String ans2, String ans3) {
                 int point = 0;
-                if(ans1.toLowerCase().equals(q.get(0).toLowerCase())) point++;
+
+                Log.i("myTag", ans1.toLowerCase());
+                Log.i("myTag", q.get(0).toLowerCase());
+
+                if(ans1.toLowerCase().equals(q.get(0).toLowerCase())){
+                    point++;
+                    Log.i("myTag", ans1.toLowerCase());
+                    Log.i("myTag", q.get(0).toLowerCase());
+                }
                 if(ans2.toLowerCase().equals(q.get(1).toLowerCase())) point++;
                 if(ans3.toLowerCase().equals(q.get(2).toLowerCase())) point++;
                 return point;

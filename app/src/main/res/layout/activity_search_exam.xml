@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".SearchExam">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        tools:layout="@layout/row_layout" />
+
+    <!-- <TextView
         android:id="@+id/textView2"
         android:layout_width="97dp"
         android:layout_height="39dp"
@@ -31,5 +40,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" /> -->
 </android.support.constraint.ConstraintLayout>

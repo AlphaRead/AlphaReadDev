@@ -69,7 +69,7 @@ public class FinalizarBuild extends Activity {
                 txtProva = findViewById(R.id.txtProva);
                 if(b != null || !TextUtils.isEmpty(txtProva.getText().toString())){
 
-                    QuestionOne question1 = new QuestionOne(b.getString("word1"), b.getString("word1"), b.getString("word1"));
+                    QuestionOne question1 = new QuestionOne(b.getString("word1"), b.getString("word2"), b.getString("word3"));
                     QuestionTwo question2 = new QuestionTwo(b.getString("word"));
                     //QuestionThree question3 = new QuestionThree(b.getString("name"), b.getString("picture"));
                     QuestionFour question4 = new QuestionFour(b.getString("frase"));

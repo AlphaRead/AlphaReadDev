@@ -88,8 +88,8 @@ public class BuildQuestionThree extends Activity {
                     Intent it = new Intent(getApplicationContext(), BuildQuestionFour.class);
 
                     it.putExtra("word1", b.getString("word1"));
-                    it.putExtra("word2", b.getString("word3"));
-                    it.putExtra("word3", b.getString("word2"));
+                    it.putExtra("word2", b.getString("word2"));
+                    it.putExtra("word3", b.getString("word3"));
                     it.putExtra("word", b.getString("word"));
                     //it.putExtra("picture", image.getImageMatrix());
                     it.putExtra("name", txtName.getText().toString());
