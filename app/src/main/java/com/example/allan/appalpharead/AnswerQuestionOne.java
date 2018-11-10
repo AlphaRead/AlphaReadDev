@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,6 +48,7 @@ public class AnswerQuestionOne extends Activity {
     private FirebaseAuth mAuth;
 
     private ArrayList<String> q;
+    private ArrayList<Integer> relation = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +73,59 @@ public class AnswerQuestionOne extends Activity {
         sig2 = findViewById(R.id.sig2);
         sig3 = findViewById(R.id.sig3);
 
-        searchInDict(q.get(0), sig1);
-        searchInDict(q.get(1), sig2);
-        searchInDict(q.get(2), sig3);
+        int k = 0;
+        boolean[] v = new boolean[]{false, false, false};
+        boolean[] s = new boolean[]{false, false, false};
+        relation.add(-1); relation.add(-1); relation.add(-1);
+        Random aleatorio = new Random();
+        while (k != 3) {
+            int numero = aleatorio.nextInt(3);
+            if (numero == 0 && !v[0]){
+                int n = aleatorio.nextInt(3);
+                if (n == 0 && !s[0]){
+                    relation.set(0, 0); s[0] = true; k++; v[0] = true;
+                    searchInDict(q.get(0), sig1);
+                }
+                if (n == 1 && !s[1]){
+                    relation.set(0, 1); s[1] = true; k++; v[0] = true;
+                    searchInDict(q.get(0), sig2);
+                }
+                if (n == 2 && !s[2]){
+                    relation.set(0, 2); s[2] = true; k++; v[0] = true;
+                    searchInDict(q.get(0), sig3);
+                }
+            }
+            if (numero == 1 && !v[1]){
+                int n = aleatorio.nextInt(3);
+                if (n == 0  && !s[0]){
+                    relation.set(1, 0); s[0] = true; k++; v[1] = true;
+                    searchInDict(q.get(1), sig1);
+                }
+                if (n == 1 && !s[1]){
+                    relation.set(1, 1); s[1] = true; k++; v[1] = true;
+                    searchInDict(q.get(1), sig2);
+                }
+                if (n == 2 && !s[2]){
+                    relation.set(1, 2); s[2] = true; k++; v[1] = true;
+                    searchInDict(q.get(1), sig3);
+                }
+            }
+            if (numero == 2 && !v[2]){
+                int n = aleatorio.nextInt(3);
+                if (n == 0 && !s[0]){
+                    relation.set(2, 0); s[0] = true; k++; v[2] = true;
+                    searchInDict(q.get(2), sig1);
+                }
+                if (n == 1 && !s[1]){
+                    relation.set(2, 1); s[1] = true; k++; v[2] = true;
+                    searchInDict(q.get(2), sig2);
+                }
+                if (n == 2 && !s[2]){
+                    relation.set(2, 2); s[2] = true; k++; v[2] = true;
+                    searchInDict(q.get(2), sig3);
+                }
+            }
+        }
 
         avancar = findViewById(R.id.btnAvancar);
         avancar.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +142,6 @@ public class AnswerQuestionOne extends Activity {
                 it.putExtra("Point", Integer.toString(point));
                 it.putExtra("uid", bundle.getString("uid"));
                 it.putExtra("userScore", bundle.getString("userScore"));
-                Log.i("myTag", "Answer: " + bundle.getString("userScore"));
                 it.putExtra("score", bundle.getString("score"));
                 it.putExtra("userUid", bundle.getString("userUid"));
 
@@ -100,17 +151,19 @@ public class AnswerQuestionOne extends Activity {
 
             private int avaliate(String ans1, String ans2, String ans3) {
                 int point = 0;
-
-                Log.i("myTag", ans1.toLowerCase());
-                Log.i("myTag", q.get(0).toLowerCase());
-
-                if(ans1.toLowerCase().equals(q.get(0).toLowerCase())){
+                Log.i("myTag", "==============\n"+relation.toString());
+                Log.i("myTag", ans1 + " " + q.get(relation.get(0)));
+                Log.i("myTag", ans2 + " " + q.get(relation.get(1)));
+                Log.i("myTag", ans3 + " " + q.get(relation.get(2)));
+                if(ans1.toLowerCase().equals(q.get(relation.get(0)).toLowerCase())){
                     point++;
-                    Log.i("myTag", ans1.toLowerCase());
-                    Log.i("myTag", q.get(0).toLowerCase());
                 }
-                if(ans2.toLowerCase().equals(q.get(1).toLowerCase())) point++;
-                if(ans3.toLowerCase().equals(q.get(2).toLowerCase())) point++;
+                if(ans2.toLowerCase().equals(q.get(relation.get(1)).toLowerCase())){
+                    point++;
+                }
+                if(ans3.toLowerCase().equals(q.get(relation.get(2)).toLowerCase())){
+                    point++;
+                }
                 return point;
             }
 
