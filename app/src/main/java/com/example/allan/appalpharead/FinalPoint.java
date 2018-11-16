@@ -51,6 +51,7 @@ public class FinalPoint extends Activity {
             public void onClick(View v) {
                 Intent it = new Intent(getApplicationContext(), PaginaPrincipal.class);
                 startActivity(it);
+                finish();
             }
         });
 

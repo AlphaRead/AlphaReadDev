@@ -4,36 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuildQuestionFour">
+    tools:context=".AnswerQuestionThree">
+
+    <Button
+        android:id="@+id/btnAvancar"
+        android:layout_width="101dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="92dp"
+        android:background="@drawable/arrow2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/txtans"
-        android:layout_width="205dp"
-        android:layout_height="50dp"
+        android:layout_width="242dp"
+        android:layout_height="90dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="84dp"
-        android:text="Leitura"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="52dp"
+        android:text="Nomear Objetos"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintHorizontal_bias="0.768"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="211dp"
-        android:layout_height="58dp"
+        android:layout_width="349dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:text="Insira uma frase completa"
+        android:text="Escreva o nome correto do objeto que aparece na foto"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtans" />
 
@@ -56,35 +69,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
-        android:src="@drawable/line4"
+        android:src="@drawable/line3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnCancel"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnAvancar"
-        android:layout_width="101dp"
-        android:layout_height="96dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="92dp"
-        android:background="@drawable/arrow2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.732"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFrase" />
-
-    <EditText
-        android:id="@+id/txtFrase"
-        android:layout_width="302dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
-        android:drawableStart="@drawable/pen"
-        android:ems="10"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 </android.support.constraint.ConstraintLayout>

@@ -44,11 +44,10 @@ public class AnswerQuestionOne extends Activity {
 
     private Context context;
 
-    private FirebaseDatabase mDatabase;
-    private FirebaseAuth mAuth;
-
     private ArrayList<String> q;
     private ArrayList<Integer> relation = new ArrayList<>();
+
+    private boolean[] v = new boolean[]{false, false, false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,59 +72,13 @@ public class AnswerQuestionOne extends Activity {
         sig2 = findViewById(R.id.sig2);
         sig3 = findViewById(R.id.sig3);
 
-        int k = 0;
-        boolean[] v = new boolean[]{false, false, false};
-        boolean[] s = new boolean[]{false, false, false};
-        relation.add(-1); relation.add(-1); relation.add(-1);
-        Random aleatorio = new Random();
-        while (k != 3) {
-            int numero = aleatorio.nextInt(3);
-            if (numero == 0 && !v[0]){
-                int n = aleatorio.nextInt(3);
-                if (n == 0 && !s[0]){
-                    relation.set(0, 0); s[0] = true; k++; v[0] = true;
-                    searchInDict(q.get(0), sig1);
-                }
-                if (n == 1 && !s[1]){
-                    relation.set(0, 1); s[1] = true; k++; v[0] = true;
-                    searchInDict(q.get(0), sig2);
-                }
-                if (n == 2 && !s[2]){
-                    relation.set(0, 2); s[2] = true; k++; v[0] = true;
-                    searchInDict(q.get(0), sig3);
-                }
-            }
-            if (numero == 1 && !v[1]){
-                int n = aleatorio.nextInt(3);
-                if (n == 0  && !s[0]){
-                    relation.set(1, 0); s[0] = true; k++; v[1] = true;
-                    searchInDict(q.get(1), sig1);
-                }
-                if (n == 1 && !s[1]){
-                    relation.set(1, 1); s[1] = true; k++; v[1] = true;
-                    searchInDict(q.get(1), sig2);
-                }
-                if (n == 2 && !s[2]){
-                    relation.set(1, 2); s[2] = true; k++; v[1] = true;
-                    searchInDict(q.get(1), sig3);
-                }
-            }
-            if (numero == 2 && !v[2]){
-                int n = aleatorio.nextInt(3);
-                if (n == 0 && !s[0]){
-                    relation.set(2, 0); s[0] = true; k++; v[2] = true;
-                    searchInDict(q.get(2), sig1);
-                }
-                if (n == 1 && !s[1]){
-                    relation.set(2, 1); s[1] = true; k++; v[2] = true;
-                    searchInDict(q.get(2), sig2);
-                }
-                if (n == 2 && !s[2]){
-                    relation.set(2, 2); s[2] = true; k++; v[2] = true;
-                    searchInDict(q.get(2), sig3);
-                }
-            }
-        }
+        relation.add(-1);
+        relation.add(-1);
+        relation.add(-1);
+
+        putSig(sig1, 0);
+        putSig(sig2, 1);
+        putSig(sig3, 2);
 
         avancar = findViewById(R.id.btnAvancar);
         avancar.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +90,13 @@ public class AnswerQuestionOne extends Activity {
 
                 int point = avaliate(ans1.getText().toString(), ans2.getText().toString(), ans3.getText().toString());
 
-                Intent it = new Intent(context, FinalPoint.class);
+                Intent it = new Intent(context, AnswerQuestionTwo.class);
+
+                it.putExtra("word", bundle.getString("word"));
+                it.putExtra("frase", bundle.getString("frase"));
 
                 it.putExtra("Point", Integer.toString(point));
+
                 it.putExtra("uid", bundle.getString("uid"));
                 it.putExtra("userScore", bundle.getString("userScore"));
                 it.putExtra("score", bundle.getString("score"));
@@ -151,25 +108,39 @@ public class AnswerQuestionOne extends Activity {
 
             private int avaliate(String ans1, String ans2, String ans3) {
                 int point = 0;
-                Log.i("myTag", "==============\n"+relation.toString());
-                Log.i("myTag", ans1 + " " + q.get(relation.get(0)));
-                Log.i("myTag", ans2 + " " + q.get(relation.get(1)));
-                Log.i("myTag", ans3 + " " + q.get(relation.get(2)));
-                if(ans1.toLowerCase().equals(q.get(relation.get(0)).toLowerCase())){
-                    point++;
-                }
-                if(ans2.toLowerCase().equals(q.get(relation.get(1)).toLowerCase())){
-                    point++;
-                }
-                if(ans3.toLowerCase().equals(q.get(relation.get(2)).toLowerCase())){
-                    point++;
-                }
+                Log.i("myTag", ans1 + " " + ans2 + " " + ans3);
+                Log.i("myTag", q.get(relation.get(0)) + " " + q.get(relation.get(1)) + " " + q.get(relation.get(2)));
+                if(ans1.toLowerCase().equals(q.get(relation.get(0)).toLowerCase())) point++;
+                if(ans2.toLowerCase().equals(q.get(relation.get(1)).toLowerCase())) point++;
+                if(ans3.toLowerCase().equals(q.get(relation.get(2)).toLowerCase())) point++;
                 return point;
             }
-
-
         });
     }
+
+    private void putSig(final TextView sig, int i){
+        Random aleatorio = new Random();
+        while (true) {
+            int n = aleatorio.nextInt(3);
+            if (n == 0 && !v[0]) {
+                v[0] = true;
+                relation.set(0, i);
+                searchInDict(q.get(0), sig);
+                break;
+            } else if (n == 1 && !v[1]) {
+                v[1] = true;
+                relation.set(1, i);
+                searchInDict(q.get(1), sig);
+                break;
+            } else if (n == 2 && !v[2]) {
+                v[2] = true;
+                relation.set(2, i);
+                searchInDict(q.get(2), sig);
+                break;
+            }
+        }
+    }
+
     private void searchInDict(final String word, final TextView sig){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://dicionario-aberto.net/") //define a url base
