@@ -42,7 +42,7 @@ public class BuildQuestionFour extends Activity {
                         })
                         .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
+
                             }
                         });
                 android.app.AlertDialog alertDialog = alert.create();
@@ -61,7 +61,7 @@ public class BuildQuestionFour extends Activity {
                     it.putExtra("word2", b.getString("word2"));
                     it.putExtra("word3", b.getString("word3"));
                     it.putExtra("word", b.getString("word"));
-                    //it.putExtra("picture", b.getString("picture"));
+                    it.putExtra("picture", b.getString("picture"));
                     it.putExtra("name", b.getString("name"));
                     it.putExtra("frase", txtFrase.getText().toString());
 

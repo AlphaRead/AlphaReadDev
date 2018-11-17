@@ -82,7 +82,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     it.putExtra("word1", lProva.get(i).get_q1().getW1());
                     it.putExtra("word2", lProva.get(i).get_q1().getW2());
                     it.putExtra("word3", lProva.get(i).get_q1().getW3());
+
                     it.putExtra("word", lProva.get(i).get_q2().getWord());
+
+                    it.putExtra("picture", lProva.get(i).get_q3().getImage());
+                    it.putExtra("name", lProva.get(i).get_q3().getName());
+
                     it.putExtra("frase", lProva.get(i).get_q4().getFrase());
 
                     it.putExtra("uid", lUid.get(i));

@@ -2,9 +2,12 @@ package com.example.allan.appalpharead;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,9 +65,7 @@ public class FinalizarBuild extends Activity {
                             }
                         })
                         .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
+                            public void onClick(DialogInterface dialog, int id) {}
                         });
                 android.app.AlertDialog alertDialog = alert.create();
                 alertDialog.show();
@@ -77,14 +78,15 @@ public class FinalizarBuild extends Activity {
                 txtProva = findViewById(R.id.txtProva);
                 if(b != null || !TextUtils.isEmpty(txtProva.getText().toString())){
 
+                    //byte[] decodedString = Base64.decode(b.getString("picture"), Base64.DEFAULT);
+                    //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
                     QuestionOne question1 = new QuestionOne(b.getString("word1"), b.getString("word2"), b.getString("word3"));
                     QuestionTwo question2 = new QuestionTwo(b.getString("word"));
-                    //QuestionThree question3 = new QuestionThree(b.getString("name"), b.getString("picture"));
+                    QuestionThree question3 = new QuestionThree(b.getString("name"), b.getString("picture"));
                     QuestionFour question4 = new QuestionFour(b.getString("frase"));
 
-                    //User user = new User(<nome da pessoa>, txtProva.getText().toString());
-
-                    Prova prova = new Prova(question1, question2, question4, txtProva.getText().toString(), uid);
+                    Prova prova = new Prova(question1, question2, question3, question4, txtProva.getText().toString(), uid);
 
                     //salva a prova no firebase
                     saveTest(prova);

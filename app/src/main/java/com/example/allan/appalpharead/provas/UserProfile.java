@@ -1,5 +1,4 @@
-package com.example.allan.appalpharead.models;
-
+package com.example.allan.appalpharead.provas;
 
 public class UserProfile {
     private String nome;
@@ -49,6 +48,4 @@ public class UserProfile {
         this.score += val;
         return this.score;
     }
-
-
 }

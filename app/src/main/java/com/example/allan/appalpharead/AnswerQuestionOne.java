@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,14 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.allan.appalpharead.models.DicionarioOnline;
+import com.example.allan.appalpharead.models.DicionarioService;
 import com.example.allan.appalpharead.models.Entry;
 import com.example.allan.appalpharead.models.Sense;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -93,6 +87,8 @@ public class AnswerQuestionOne extends Activity {
                 Intent it = new Intent(context, AnswerQuestionTwo.class);
 
                 it.putExtra("word", bundle.getString("word"));
+                it.putExtra("picture", bundle.getString("picture"));
+                it.putExtra("name", bundle.getString("name"));
                 it.putExtra("frase", bundle.getString("frase"));
 
                 it.putExtra("Point", Integer.toString(point));

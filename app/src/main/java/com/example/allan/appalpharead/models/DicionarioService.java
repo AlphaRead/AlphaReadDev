@@ -1,4 +1,4 @@
-package com.example.allan.appalpharead;
+package com.example.allan.appalpharead.models;
 
 import com.example.allan.appalpharead.models.DicionarioOnline;
 

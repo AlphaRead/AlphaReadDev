@@ -15,6 +15,7 @@ import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
 import com.example.allan.appalpharead.provas.Prova;
 import com.example.allan.appalpharead.provas.QuestionFour;
 import com.example.allan.appalpharead.provas.QuestionOne;
+import com.example.allan.appalpharead.provas.QuestionThree;
 import com.example.allan.appalpharead.provas.QuestionTwo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,9 +70,12 @@ public class SearchExam extends Activity {
 
                         QuestionTwo q2 = new QuestionTwo(pSnapShot.child("_q2").child("word").getValue().toString());
 
+
+                        QuestionThree q3 = new QuestionThree(pSnapShot.child("_q3").child("name").getValue().toString(), pSnapShot.child("_q3").child("image").getValue().toString());
+
                         QuestionFour q4 = new QuestionFour(pSnapShot.child("_q4").child("frase").getValue().toString());
 
-                        Prova p = new Prova(q1, q2, q4, pSnapShot.child("questionTitle").getValue().toString(), pSnapShot.child("userUid").getValue().toString());
+                        Prova p = new Prova(q1, q2, q3, q4, pSnapShot.child("questionTitle").getValue().toString(), pSnapShot.child("userUid").getValue().toString());
                         p.setScore(Integer.valueOf(pSnapShot.child("score").getValue().toString()));
                         prova.add(p);
 

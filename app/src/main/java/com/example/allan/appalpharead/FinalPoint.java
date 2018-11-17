@@ -64,7 +64,7 @@ public class FinalPoint extends Activity {
         totalExam = String.valueOf(Integer.valueOf(bundle.getString("score")) + Integer.valueOf(bundle.getString("Point")));
         provasRef.child("score").setValue(totalExam);
 
-        //Change score to User
+        //Change score to UserProfile
         DatabaseReference usersRef = mDatabase.getReference("/Users/"+uid+"/UserProfile/"+uid);
         totalUser = String.valueOf(Integer.valueOf(bundle.getString("userScore")) + Integer.valueOf(bundle.getString("Point")));
         usersRef.child("score").setValue(totalUser);

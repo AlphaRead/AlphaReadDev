@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.allan.appalpharead.models.Data;
+import com.example.allan.appalpharead.api.ApiUtils;
+import com.example.allan.appalpharead.api.Data;
+import com.example.allan.appalpharead.api.PythonService;
 
 import java.io.ByteArrayOutputStream;
 
@@ -34,6 +36,8 @@ public class BuildQuestionThree extends Activity {
     private Button btnAvancar, btnCamera, btnCancel;
     private EditText txtName;
     private ImageView image;
+
+    private String encoded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +95,7 @@ public class BuildQuestionThree extends Activity {
                     it.putExtra("word2", b.getString("word2"));
                     it.putExtra("word3", b.getString("word3"));
                     it.putExtra("word", b.getString("word"));
-                    //it.putExtra("picture", image.getImageMatrix());
+                    it.putExtra("picture", encoded);
                     it.putExtra("name", txtName.getText().toString());
 
                     startActivity(it);
@@ -112,30 +116,59 @@ public class BuildQuestionThree extends Activity {
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream .toByteArray();
 
-            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-            this.imageRecognition(encoded);
+            this.onHit(encoded);
 
             image.setImageBitmap(imageBitmap);
         }
     }
 
-    protected void imageRecognition(String base64){
+    protected void onHit(String base64){
+        Data data = new Data(); data.data = base64;
+
+        Call<Data> service = ApiUtils.getCreateUser().postImage("application/json", data);
+
+        service.enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Data api_return = response.body();
+                        txtName.setText(api_return.data);
+                    }catch (Exception e){}
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /*protected void imageRecognition(String base64){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.6:5000/")
+                .baseUrl("http://192.168.100.4:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        PythonService api = retrofit.create(PythonService.class);
+        PythonService service = retrofit.create(PythonService.class);
 
-        String json = "{\"image\": "+ base64 +"\"}";
+        Call<Data> requestApi = service.postImage("image/"+"aaa");
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+        String json = "{'image':"+ "'aaa'" +"}";
 
-        api.postImage(requestBody).enqueue(new Callback<Data>() {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "Content/Type");
+        //RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), String.valueOf(data));
+
+        //Call<Data> requestApi = service.postImage("image", requestBody);
+
+        requestApi.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
                 try{
+                    Log.i("Base64", response.toString());
                     Log.i("Base64", response.body().toString());
                 }catch(Exception e){
                     Log.i("Base64", "error");
@@ -147,6 +180,6 @@ public class BuildQuestionThree extends Activity {
             }
         });
 
-    }
+    }*/
 
 }

@@ -4,7 +4,7 @@ public class Prova {
 
     private QuestionOne _q1;
     private QuestionTwo _q2;
-    //private QuestionThree _q3;
+    private QuestionThree _q3;
     private QuestionFour _q4;
 
     private int score;
@@ -14,9 +14,10 @@ public class Prova {
 
     Prova(){}
 
-    public Prova(QuestionOne q1, QuestionTwo q2, QuestionFour q4, String questionTitle, String userUid){
+    public Prova(QuestionOne q1, QuestionTwo q2, QuestionThree q3, QuestionFour q4, String questionTitle, String userUid){
         this._q1 = q1;
         this._q2 = q2;
+        this._q3 = q3;
         this._q4 = q4;
         this.score = 0;
         this.questionTitle = questionTitle;
@@ -29,9 +30,9 @@ public class Prova {
     public QuestionTwo get_q2() {
         return _q2;
     }
-   // public QuestionThree get_q3() {
-    //    return _q3;
-   // }
+     public QuestionThree get_q3() {
+        return _q3;
+    }
     public QuestionFour get_q4() {
         return _q4;
     }
@@ -51,9 +52,9 @@ public class Prova {
     public void set_q2(QuestionTwo _q2) {
         this._q2 = _q2;
     }
-    //public void set_q3(QuestionThree _q3) {
-   //     this._q3 = _q3;
-   // }
+    public void set_q3(QuestionThree _q3) {
+        this._q3 = _q3;
+    }
     public void set_q4(QuestionFour _q4) {
         this._q4 = _q4;
     }

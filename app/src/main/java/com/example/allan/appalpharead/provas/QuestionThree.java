@@ -6,10 +6,10 @@ public class QuestionThree {
 
     private static int score = 1;
 
-    public Bitmap image;
+    public String image;
     public String name;
 
-    public QuestionThree(String name, Bitmap image){
+    public QuestionThree(String name, String image){
         this.image = image;
         this.name = name;
     }
@@ -17,7 +17,7 @@ public class QuestionThree {
     public static int getScore() {
         return score;
     }
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
     public String getName() {
@@ -27,7 +27,7 @@ public class QuestionThree {
     public static void setScore(int score) {
         QuestionThree.score = score;
     }
-    public void setImage(Bitmap image) {
+    public void setImage(String image) {
         this.image = image;
     }
     public void setName(String name) {

@@ -30,6 +30,8 @@ public class AnswerQuestionTwo extends Activity {
             public void onClick(View v) {
                 Intent it = new Intent(context, AnswerQuestionThree.class);
 
+                it.putExtra("picture", bundle.getString("picture"));
+                it.putExtra("name", bundle.getString("name"));
                 it.putExtra("frase", bundle.getString("frase"));
 
                 it.putExtra("Point", bundle.getString("Point"));

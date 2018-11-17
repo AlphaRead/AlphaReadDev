@@ -70,7 +70,7 @@ public class BuildQuestionOne extends Activity {
                         })
                         .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
+
                             }
                         });
                 android.app.AlertDialog alertDialog = alert.create();
