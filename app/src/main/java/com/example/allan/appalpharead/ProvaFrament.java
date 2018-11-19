@@ -1,5 +1,6 @@
 package com.example.allan.appalpharead;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -17,12 +18,16 @@ public class ProvaFrament extends Fragment {
 
     private Button btnSearch, btnBuild;
 
-    private static final int MY_CAMERA_REQUEST_CODE = 100;
+    private Context context;
+
+    private static final int REQUEST_CODE = 100;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_prova, container, false);
+
+        context = view.getContext();
 
         btnBuild = view.findViewById(R.id.btnBuild);
         btnSearch = view.findViewById(R.id.btnSearch);
@@ -30,8 +35,15 @@ public class ProvaFrament extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getContext(), SearchExam.class);
-                startActivity(it);
+                if (checkPermissionFromDevice()){
+                    Intent it = new Intent(getContext(), SearchExam.class);
+                    startActivity(it);
+                } else {
+                    requestPermissions(new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.RECORD_AUDIO
+                    }, REQUEST_CODE);
+                }
             }
         });
 
@@ -39,7 +51,7 @@ public class ProvaFrament extends Fragment {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
                 } else {
                     Intent it = new Intent(getContext(), BuildQuestionOne.class);
                     startActivity(it);
@@ -49,4 +61,12 @@ public class ProvaFrament extends Fragment {
 
         return view;
     }
+
+    private boolean checkPermissionFromDevice() {
+        int write_external = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int recording = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO);
+        return write_external == PackageManager.PERMISSION_GRANTED &&
+                recording == PackageManager.PERMISSION_GRANTED;
+    }
+
 }

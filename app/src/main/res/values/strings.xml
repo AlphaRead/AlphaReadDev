@@ -23,4 +23,5 @@
     <string name="title_activity_build_question_four">BuildQuestionFour</string>
     <string name="title_activity_answer_question_two">AnswerQuestionTwo</string>
     <string name="title_activity_answer_question_three">AnswerQuestionThree</string>
+    <string name="title_activity_answer_question_four">AnswerQuestionFour</string>
 </resources>

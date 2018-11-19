@@ -42,7 +42,7 @@ public class AnswerQuestionThree extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(context, FinalPoint.class);
+                Intent it = new Intent(context, AnswerQuestionFour.class);
 
                 int point = Integer.valueOf(bundle.getString("Point")) + pontuacao();
                 Log.i("questao3", bundle.getString("Point"));
