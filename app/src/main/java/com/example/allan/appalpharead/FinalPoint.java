@@ -67,6 +67,9 @@ public class FinalPoint extends Activity {
         //Change score to UserProfile
         DatabaseReference usersRef = mDatabase.getReference("/Users/"+uid+"/UserProfile/"+uid);
         totalUser = String.valueOf(Integer.valueOf(bundle.getString("userScore")) + Integer.valueOf(bundle.getString("Point")));
+        Log.i("pontuacao", totalUser);
+        Log.i("pontuacao", bundle.getString("userScore"));
+        Log.i("pontuacao", bundle.getString("Point"));
         usersRef.child("score").setValue(totalUser);
     }
 }

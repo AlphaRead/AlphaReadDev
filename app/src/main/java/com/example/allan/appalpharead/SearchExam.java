@@ -29,9 +29,12 @@ import java.util.SimpleTimeZone;
 
 public class SearchExam extends Activity {
 
-    private ArrayList<String> titles, points, uid;
+    private FirebaseAuth mAuth;
+    private String Uid;
+
+    private ArrayList<String> titles, points, uid, myScore;
     private ArrayList<Prova> prova;
-    private String myScore;
+    //private String myScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,17 @@ public class SearchExam extends Activity {
         points = new ArrayList<>();
         uid = new ArrayList<>();
         prova = new ArrayList<>();
+        myScore = new ArrayList<>();
+
+        mAuth = FirebaseAuth.getInstance();
+        Uid = mAuth.getUid();
 
         initList();
     }
 
     private void initList(){
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference refProva = database.getReference("Users/");
 
@@ -54,9 +63,9 @@ public class SearchExam extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    myScore = "";
+                    //myScore = "";
                     for (DataSnapshot uSnapShot: ds.child("UserProfile").getChildren()) {
-                        myScore = uSnapShot.child("score").getValue().toString();
+                        myScore.add(uSnapShot.child("score").getValue().toString());
                     }
 
                     for (DataSnapshot pSnapShot : ds.child("Provas").getChildren()) {

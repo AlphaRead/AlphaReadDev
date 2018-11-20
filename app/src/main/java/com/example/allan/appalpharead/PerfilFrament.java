@@ -95,7 +95,6 @@ public class PerfilFrament extends Fragment {
                 rank2 = names.sort(rank2, 0,rank2.size()-1);
                 BuscaBinaria bb = new BuscaBinaria();
                 int x = bb.Binaria(name.getText().toString(), rank2);
-                //Log.i("ordenacao", String.valueOf(x));
                 ranking.setText(String.valueOf(x));
             }
             @Override
