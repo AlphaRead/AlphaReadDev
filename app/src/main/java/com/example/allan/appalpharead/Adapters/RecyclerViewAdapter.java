@@ -30,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> lPoints = new ArrayList<>();
     private ArrayList<String> lUid = new ArrayList<>();
     private ArrayList<Prova> lProva = new ArrayList<>();
-    private ArrayList<String> myScore = new ArrayList<>();
+    private String myScore;
     private Context context;
     private Boolean flag;
 
@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.flag = false;
     }
 
-    public RecyclerViewAdapter(ArrayList<String> myScore, ArrayList<Prova> lProva, ArrayList<String> lUid, ArrayList<String> lTitles, ArrayList<String> lPoints, Context context) {
+    public RecyclerViewAdapter(String myScore, ArrayList<Prova> lProva, ArrayList<String> lUid, ArrayList<String> lTitles, ArrayList<String> lPoints, Context context) {
         this.lTitles = lTitles;
         this.lPoints = lPoints;
         this.lProva = lProva;
@@ -63,7 +63,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        Log.d(TAG, "onBindViewHolder: called");
 
         viewHolder.title.setText(lTitles.get(i));
         viewHolder.points.setText(lPoints.get(i));
@@ -91,7 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     it.putExtra("frase", lProva.get(i).get_q4().getFrase());
 
                     it.putExtra("uid", lUid.get(i));
-                    it.putExtra("userScore", myScore.get(i));
+                    it.putExtra("userScore", myScore);
 
                     it.putExtra("score", String.valueOf(lProva.get(i).getScore()));
                     it.putExtra("title", lProva.get(i).getQuestionTitle());

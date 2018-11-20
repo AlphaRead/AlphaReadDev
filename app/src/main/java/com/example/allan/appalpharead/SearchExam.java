@@ -32,9 +32,9 @@ public class SearchExam extends Activity {
     private FirebaseAuth mAuth;
     private String Uid;
 
-    private ArrayList<String> titles, points, uid, myScore;
+    private ArrayList<String> titles, points, uid;
     private ArrayList<Prova> prova;
-    //private String myScore;
+    private String myScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class SearchExam extends Activity {
         points = new ArrayList<>();
         uid = new ArrayList<>();
         prova = new ArrayList<>();
-        myScore = new ArrayList<>();
+    //    myScore = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
         Uid = mAuth.getUid();
@@ -63,9 +63,11 @@ public class SearchExam extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    //myScore = "";
-                    for (DataSnapshot uSnapShot: ds.child("UserProfile").getChildren()) {
-                        myScore.add(uSnapShot.child("score").getValue().toString());
+                    if(ds.getKey().equals(Uid)) {
+                        myScore = "";
+                        for (DataSnapshot uSnapShot : ds.child("UserProfile").getChildren()) {
+                            myScore = uSnapShot.child("score").getValue().toString();
+                        }
                     }
 
                     for (DataSnapshot pSnapShot : ds.child("Provas").getChildren()) {
@@ -87,8 +89,6 @@ public class SearchExam extends Activity {
                         Prova p = new Prova(q1, q2, q3, q4, pSnapShot.child("questionTitle").getValue().toString(), pSnapShot.child("userUid").getValue().toString());
                         p.setScore(Integer.valueOf(pSnapShot.child("score").getValue().toString()));
                         prova.add(p);
-
-                //        if (!myScore.equals("")) initRecyclerView();
                     }
                 }
                 initRecyclerView();
