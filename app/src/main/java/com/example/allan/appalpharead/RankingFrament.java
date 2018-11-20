@@ -8,12 +8,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
+import com.example.allan.appalpharead.Algoritms.QuickSortRankUsers;
+import com.example.allan.appalpharead.Algoritms.RankUsers;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 public class RankingFrament extends Fragment {
 
     private ArrayList<String> titles, points;
+    private ArrayList<RankUsers> rank = new ArrayList<>();
 
     private Context context;
     RecyclerView rv;
@@ -56,11 +60,17 @@ public class RankingFrament extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     for (DataSnapshot pSnapShot : ds.child("UserProfile").getChildren()){
-                        titles.add(pSnapShot.child("nome").getValue().toString() + " " + pSnapShot.child("sobrenome").getValue().toString());
-                        points.add(pSnapShot.child("score").getValue().toString());
-                        initRecyclerView();
+                        rank.add(new RankUsers(pSnapShot.child("nome").getValue().toString() + " " + pSnapShot.child("sobrenome").getValue().toString(),
+                                Integer.valueOf(pSnapShot.child("score").getValue().toString())));
                     }
                 }
+                QuickSortRankUsers ob = new QuickSortRankUsers();
+                rank = ob.sort(rank, 0, rank.size()-1);
+                for(int i = rank.size()-1; i>=0; i--){
+                    titles.add(rank.get(i).getName());
+                    points.add(String.valueOf(rank.get(i).getPoint()));
+                }
+                initRecyclerView();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
@@ -69,6 +79,7 @@ public class RankingFrament extends Fragment {
 
     private void initRecyclerView(){
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(titles, points, context);
+        //RecyclerViewAdapter adapter = new RecyclerViewAdapter(rank, context);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(context));
     }

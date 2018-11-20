@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
+import com.example.allan.appalpharead.Algoritms.QuickSortRankUsers;
+import com.example.allan.appalpharead.Algoritms.RankUsers;
 import com.example.allan.appalpharead.provas.Prova;
 import com.example.allan.appalpharead.provas.QuestionOne;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +28,7 @@ public class MinhasProvas extends Activity {
     FirebaseAuth mAuth;
 
     private ArrayList<String> titles, points;
+    private ArrayList<RankUsers> rank = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +49,20 @@ public class MinhasProvas extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    titles.add(ds.child("questionTitle").getValue().toString());
-                    points.add(ds.child("score").getValue().toString());
-                    initRecyclerView();
+                    RankUsers user = new RankUsers(ds.child("questionTitle").getValue().toString(), Integer.valueOf(ds.child("score").getValue().toString()));
+                    rank.add(user);
                 }
+                QuickSortRankUsers ob = new QuickSortRankUsers();
+                rank = ob.sort(rank, 0, rank.size()-1);
+                for(int i = rank.size()-1; i>=0; i--){
+                    titles.add(rank.get(i).getName());
+                    points.add(String.valueOf(rank.get(i).getPoint()));
+                }
+                initRecyclerView();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 

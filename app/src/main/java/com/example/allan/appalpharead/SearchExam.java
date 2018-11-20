@@ -79,9 +79,10 @@ public class SearchExam extends Activity {
                         p.setScore(Integer.valueOf(pSnapShot.child("score").getValue().toString()));
                         prova.add(p);
 
-                        if (!myScore.equals("")) initRecyclerView();
+                //        if (!myScore.equals("")) initRecyclerView();
                     }
                 }
+                initRecyclerView();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
