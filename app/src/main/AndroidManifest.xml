@@ -15,6 +15,7 @@
         android:required="true" />
 
     <application
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@drawable/cat"
         android:label="@string/app_name"

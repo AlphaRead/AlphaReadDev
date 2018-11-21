@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -12,15 +13,26 @@ import android.app.Activity;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.allan.appalpharead.api.ApiUtils;
+import com.example.allan.appalpharead.api.Data;
+
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AnswerQuestionFour extends Activity {
 
@@ -32,7 +44,7 @@ public class AnswerQuestionFour extends Activity {
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
 
-    private String pathSaved = "";
+    private String pathSaved = "", transcript = "";
     private Boolean flagGravar, flagPlay;
 
     @Override
@@ -88,7 +100,7 @@ public class AnswerQuestionFour extends Activity {
 
                     pathSaved = Environment.getExternalStorageDirectory()
                             .getAbsolutePath()+"/"
-                            + UUID.randomUUID().toString()+"_audio_record.3gp";
+                            + UUID.randomUUID().toString()+"_audio_record.wav";
 
                     setupMediaRecord();
                     try{
@@ -141,6 +153,24 @@ public class AnswerQuestionFour extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                byte[] audioBytes;
+                try {
+                    File audioFile = new File(pathSaved);
+                    long fileSize = audioFile.length();
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    FileInputStream fis = new FileInputStream(new File(pathSaved));
+                    byte[] buf = new byte[1024];
+                    int n;
+                    while (-1 != (n = fis.read(buf))) {
+                        baos.write(buf, 0, n);
+                    }
+                    audioBytes = baos.toByteArray();
+
+                    String _audioBase64 = Base64.encodeToString(audioBytes, Base64.DEFAULT);
+                    onHit(_audioBase64);
+                }catch (Exception e){ }
+
                 Intent it = new Intent(context, FinalPoint.class);
 
                 it.putExtra("Point", String.valueOf(10));
@@ -163,6 +193,29 @@ public class AnswerQuestionFour extends Activity {
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         mediaRecorder.setOutputFile(pathSaved);
+    }
+
+    protected void onHit(String base64){
+        Data data = new Data(); data.data = base64;
+
+        Call<Data> service = ApiUtils.getCreateAudio().postAudio("application/json", data);
+
+        service.enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Data api_return = response.body();
+                        transcript =  api_return.data;
+                    }catch (Exception e){}
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+
+            }
+        });
     }
 
 }
