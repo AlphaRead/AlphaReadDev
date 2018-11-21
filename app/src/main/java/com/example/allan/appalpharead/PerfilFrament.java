@@ -47,7 +47,7 @@ public class PerfilFrament extends Fragment {
     @SuppressLint("WrongViewCast")
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         context = view.getContext();

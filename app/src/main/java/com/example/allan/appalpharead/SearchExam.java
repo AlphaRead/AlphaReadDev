@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
 import com.example.allan.appalpharead.provas.Prova;
@@ -25,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.SimpleTimeZone;
 
@@ -38,10 +42,16 @@ public class SearchExam extends Activity {
     private String myScore;
     private ProgressBar prog;
 
+    private ImageView img;
+    private TextView msg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_exam);
+
+        msg = findViewById(R.id.msg);
+        img = findViewById(R.id.back);
 
         titles = new ArrayList<>();
         points = new ArrayList<>();
@@ -95,7 +105,12 @@ public class SearchExam extends Activity {
                         prova.add(p);
                     }
                 }
-                initRecyclerView();
+                if (prova.isEmpty()){
+                    img.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.books));
+                    msg.setText("Não existe nenhuma atividade registrada até o momento.\n\nCrie uma atividade agora para que outras pessoas possam aprender com você!");
+                }
+                else initRecyclerView();
+
                 prog.setVisibility(View.GONE);
             }
             @Override

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,10 +34,16 @@ public class MinhasProvas extends Activity {
     private ArrayList<RankUsers> rank = new ArrayList<>();
     private ProgressBar prog;
 
+    private ImageView img;
+    private TextView msg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_minhas_provas);
+
+        msg = findViewById(R.id.msg);
+        img = findViewById(R.id.back);
 
         mDatabase = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -57,13 +64,19 @@ public class MinhasProvas extends Activity {
                     RankUsers user = new RankUsers(ds.child("questionTitle").getValue().toString(), Integer.valueOf(ds.child("score").getValue().toString()));
                     rank.add(user);
                 }
-                QuickSortRankUsers ob = new QuickSortRankUsers();
-                rank = ob.sort(rank, 0, rank.size()-1);
-                for(int i = rank.size()-1; i>=0; i--){
-                    titles.add(rank.get(i).getName());
-                    points.add(String.valueOf(rank.get(i).getPoint()));
+                if (rank.isEmpty()){
+                    img.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.books));
+                    msg.setText("Você não tem nenhuma atividade construida até agora.\n\nCrie uma atividade para que outras pessoas possam aprender com você!");
+                }else {
+                    QuickSortRankUsers ob = new QuickSortRankUsers();
+                    rank = ob.sort(rank, 0, rank.size() - 1);
+                    for (int i = rank.size() - 1; i >= 0; i--) {
+                        titles.add(rank.get(i).getName());
+                        points.add(String.valueOf(rank.get(i).getPoint()));
+                    }
+
+                    initRecyclerView();
                 }
-                initRecyclerView();
                 prog.setVisibility(View.GONE);
             }
 

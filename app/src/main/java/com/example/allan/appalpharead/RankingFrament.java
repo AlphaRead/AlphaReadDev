@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
@@ -33,7 +35,7 @@ public class RankingFrament extends Fragment {
 
     private ProgressBar prog;
     private Context context;
-    RecyclerView rv;
+    private RecyclerView rv;
 
     @SuppressLint("WrongViewCast")
     @Nullable
@@ -69,13 +71,14 @@ public class RankingFrament extends Fragment {
                     }
                 }
                 QuickSortRankUsers ob = new QuickSortRankUsers();
-                rank = ob.sort(rank, 0, rank.size()-1);
-                for(int i = rank.size()-1; i>=0; i--){
+                rank = ob.sort(rank, 0, rank.size() - 1);
+                for (int i = rank.size() - 1; i >= 0; i--) {
                     titles.add(rank.get(i).getName());
                     points.add(String.valueOf(rank.get(i).getPoint()));
                 }
                 initRecyclerView();
                 prog.setVisibility(View.GONE);
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
