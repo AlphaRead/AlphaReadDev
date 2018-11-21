@@ -48,7 +48,6 @@ public class AnswerQuestionTwo extends Activity {
         bundle = getIntent().getExtras();
 
         palavra = bundle.getString("word");
-        Point = Integer.valueOf(bundle.getString("Point"));
 
         word = findViewById(R.id.word);
         word.setText(palavra);
@@ -85,24 +84,8 @@ public class AnswerQuestionTwo extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 selecao = String.valueOf(classlist.getSelectedItem());
                 searchInDict(palavra, selecao);
-                Intent it = new Intent(context, AnswerQuestionThree.class);
-
-                it.putExtra("picture", bundle.getString("picture"));
-                it.putExtra("name", bundle.getString("name"));
-                it.putExtra("frase", bundle.getString("frase"));
-
-                it.putExtra("Point", String.valueOf(Point));
-
-                it.putExtra("uid", bundle.getString("uid"));
-                it.putExtra("userScore", bundle.getString("userScore"));
-                it.putExtra("score", bundle.getString("score"));
-                it.putExtra("userUid", bundle.getString("userUid"));
-
-                startActivity(it);
-                finish();
             }
         });
     }
@@ -178,16 +161,50 @@ public class AnswerQuestionTwo extends Activity {
                                 break;
                             default:
                                 Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
+                                classe = "";
                                 break;
                         }
-
+                        Log.i("questao2", classe);
+                        Log.i("questao2", selecao);
                         if (classe.equals(selecao)) {
-                            Point += 1;
+                            Point = Integer.valueOf(bundle.getString("Point")) + 1;
+                            Log.i("questao2", String.valueOf(Point));
                         }
+                        Intent it = new Intent(context, AnswerQuestionThree.class);
+
+                        it.putExtra("picture", bundle.getString("picture"));
+                        it.putExtra("name", bundle.getString("name"));
+                        it.putExtra("frase", bundle.getString("frase"));
+
+                        Log.i("questao2", String.valueOf(Point));
+                        it.putExtra("Point", String.valueOf(Point));
+
+                        it.putExtra("uid", bundle.getString("uid"));
+                        it.putExtra("userScore", bundle.getString("userScore"));
+                        it.putExtra("score", bundle.getString("score"));
+                        it.putExtra("userUid", bundle.getString("userUid"));
+
+                        startActivity(it);
+                        finish();
 
                     }catch (Exception e){
                         Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
+                        Intent it = new Intent(context, AnswerQuestionThree.class);
 
+                        it.putExtra("picture", bundle.getString("picture"));
+                        it.putExtra("name", bundle.getString("name"));
+                        it.putExtra("frase", bundle.getString("frase"));
+
+                        Log.i("questao2", bundle.getString("Point"));
+                        it.putExtra("Point", bundle.getString("Point"));
+
+                        it.putExtra("uid", bundle.getString("uid"));
+                        it.putExtra("userScore", bundle.getString("userScore"));
+                        it.putExtra("score", bundle.getString("score"));
+                        it.putExtra("userUid", bundle.getString("userUid"));
+
+                        startActivity(it);
+                        finish();
                     }
                 }
             }
@@ -195,6 +212,22 @@ public class AnswerQuestionTwo extends Activity {
             @Override
             public void onFailure(Call<DicionarioOnline> call, Throwable t) {
                 Toast.makeText(context, "Palavra '"+word+"' não encontrada.", Toast.LENGTH_LONG).show();
+                Intent it = new Intent(context, AnswerQuestionThree.class);
+
+                it.putExtra("picture", bundle.getString("picture"));
+                it.putExtra("name", bundle.getString("name"));
+                it.putExtra("frase", bundle.getString("frase"));
+
+                Log.i("questao2", bundle.getString("Point"));
+                it.putExtra("Point", bundle.getString("Point"));
+
+                it.putExtra("uid", bundle.getString("uid"));
+                it.putExtra("userScore", bundle.getString("userScore"));
+                it.putExtra("score", bundle.getString("score"));
+                it.putExtra("userUid", bundle.getString("userUid"));
+
+                startActivity(it);
+                finish();
             }
         });
     }

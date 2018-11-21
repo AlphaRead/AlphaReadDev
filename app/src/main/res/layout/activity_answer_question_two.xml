@@ -76,15 +76,16 @@
 
     <TextView
         android:id="@+id/word"
-        android:layout_width="163dp"
-        android:layout_height="27dp"
+        android:layout_width="304dp"
+        android:layout_height="46dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -96,10 +97,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="#eee"
+        android:popupBackground="#FFFF99"
+        android:textAlignment="center"
         android:entries="@array/classes_gramaticais"
         app:layout_constraintBottom_toTopOf="@+id/btnAvancar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/word" />
+        app:layout_constraintTop_toBottomOf="@+id/word"
+        app:layout_constraintVertical_bias="0.16" />
 
 </android.support.constraint.ConstraintLayout>

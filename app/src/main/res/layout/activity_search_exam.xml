@@ -9,14 +9,15 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="621dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:ignore="MissingConstraints"
         tools:layout="@layout/row_layout"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-20dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
     <ProgressBar
         android:id="@+id/progressAllProvas"
@@ -53,6 +54,21 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="384dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
+        android:text="Atividades"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

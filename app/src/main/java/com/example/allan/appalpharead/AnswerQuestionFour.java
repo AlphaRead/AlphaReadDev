@@ -173,7 +173,7 @@ public class AnswerQuestionFour extends Activity {
 
                 Intent it = new Intent(context, FinalPoint.class);
 
-                it.putExtra("Point", String.valueOf(10));
+                it.putExtra("Point", bundle.getString("Point"));
 
                 it.putExtra("uid", bundle.getString("uid"));
                 it.putExtra("userScore", bundle.getString("userScore"));

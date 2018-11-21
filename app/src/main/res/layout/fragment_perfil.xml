@@ -148,7 +148,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Minhas Provas"
+            android:text="Minhas Atividades"
             android:textColor="#fff"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
