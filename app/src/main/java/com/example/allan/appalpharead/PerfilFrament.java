@@ -36,7 +36,7 @@ public class PerfilFrament extends Fragment {
     private FirebaseAuth mAuth;
     private String uid;
 
-    private Button btnMinhasProvas;
+    private Button btnMinhasProvas, btnLogoff;
     private TextView name, score, ranking;
     private ArrayList<RankUsers> rank = new ArrayList<>();
     private ArrayList<RankUsers> rank2 = new ArrayList<>();
@@ -56,6 +56,8 @@ public class PerfilFrament extends Fragment {
         name = view.findViewById(R.id.name_perfil);
         score = view.findViewById(R.id.score);
         ranking = view.findViewById(R.id.ranking);
+
+        btnLogoff = view.findViewById(R.id.logout);
 
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
@@ -90,12 +92,10 @@ public class PerfilFrament extends Fragment {
                 }
                 QuickSortRankUsers ob = new QuickSortRankUsers();
                 rank = ob.sort(rank, 0, rank.size()-1);
-                for(int i = rank.size()-1, j=1; i>=0; i--, j++) rank2.add(new RankUsers(rank.get(i).getName(), j));
-                QuickSortName names = new QuickSortName();
-                rank2 = names.sort(rank2, 0,rank2.size()-1);
-                BuscaBinaria bb = new BuscaBinaria();
-                int x = bb.Binaria(name.getText().toString(), rank2);
-                ranking.setText(String.valueOf(x));
+                for(int i=rank.size()-1; i>=0; i--) {
+                    if (rank.get(i).getName().equals(name.getText().toString()))
+                        ranking.setText(String.valueOf(rank.size()-i));
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
@@ -108,6 +108,14 @@ public class PerfilFrament extends Fragment {
             public void onClick(View view) {
                 Intent it = new Intent(getContext(), MinhasProvas.class);
                 startActivity(it);
+            }
+        });
+
+        btnLogoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(context, MainActivity.class));
             }
         });
 
