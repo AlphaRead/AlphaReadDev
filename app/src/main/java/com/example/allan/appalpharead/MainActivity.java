@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +26,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
+    private ProgressBar prog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        prog = findViewById(R.id.progressRank);
+        prog.setVisibility(View.GONE);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -69,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    prog.setVisibility(View.VISIBLE);
                     String emailStr = (String) email.getText().toString();
                     String senhaStr = (String) senha.getText().toString();
                     login(emailStr, senhaStr);
@@ -106,22 +114,25 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (!dataSnapshot.hasChild(uid)) {
+                                        prog.setVisibility(View.GONE);
                                         startActivity(new Intent(MainActivity.this, CadastroUserActivity.class));
                                     }else{
+                                        prog.setVisibility(View.GONE);
                                         Intent it = new Intent(getApplicationContext(), PaginaPrincipal.class);
                                         startActivity(it);
                                     }
                                 }
                                 @Override
-                                public void onCancelled(DatabaseError databaseError) {}
+                                public void onCancelled(DatabaseError databaseError) {
+                                    prog.setVisibility(View.GONE);
+                                }
                             });
-
-
                         }else{
+                            prog.setVisibility(View.GONE);
                             android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(MainActivity.this);
                             alert.setTitle("Aviso");
                             alert
-                                    .setMessage("You shall not pass!!!")
+                                    .setMessage("Usuário/Senha incorretos!")
                                     .setIcon(R.drawable.notification);
                             android.app.AlertDialog alertDialog = alert.create();
                             alertDialog.show();

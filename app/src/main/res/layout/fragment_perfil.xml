@@ -24,7 +24,7 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="56dp"
+                android:layout_marginTop="44dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/cat"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,14 +49,14 @@
 
             <Button
                 android:id="@+id/logout"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="35dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="192dp"
+                android:layout_marginTop="200dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/logout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/name_perfil"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>

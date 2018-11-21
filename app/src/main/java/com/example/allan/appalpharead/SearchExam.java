@@ -31,10 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.SimpleTimeZone;
 
 public class SearchExam extends Activity {
 
@@ -62,7 +59,6 @@ public class SearchExam extends Activity {
         points = new ArrayList<>();
         uid = new ArrayList<>();
         prova = new ArrayList<>();
-    //    myScore = new ArrayList<>();
 
         mAuth = FirebaseAuth.getInstance();
         Uid = mAuth.getUid();
@@ -105,24 +101,6 @@ public class SearchExam extends Activity {
                                 pSnapShot.child("score").getValue().toString(),
                                 pSnapShot.getKey(),
                                 p));
-                        /*titles.add(pSnapShot.child("questionTitle").getValue().toString());
-                        points.add(pSnapShot.child("score").getValue().toString());
-                        uid.add(pSnapShot.getKey());
-
-                        QuestionOne q1 = new QuestionOne(pSnapShot.child("_q1").child("w1").getValue().toString(),
-                                pSnapShot.child("_q1").child("w2").getValue().toString(),
-                                pSnapShot.child("_q1").child("w3").getValue().toString());
-
-                        QuestionTwo q2 = new QuestionTwo(pSnapShot.child("_q2").child("word").getValue().toString());
-
-
-                        QuestionThree q3 = new QuestionThree(pSnapShot.child("_q3").child("name").getValue().toString(), pSnapShot.child("_q3").child("image").getValue().toString());
-
-                        QuestionFour q4 = new QuestionFour(pSnapShot.child("_q4").child("frase").getValue().toString());
-
-                        Prova p = new Prova(q1, q2, q3, q4, pSnapShot.child("questionTitle").getValue().toString(), pSnapShot.child("userUid").getValue().toString());
-                        p.setScore(Integer.valueOf(pSnapShot.child("score").getValue().toString()));
-                        prova.add(p);*/
                     }
                 }
                 if (rank.isEmpty()){
@@ -154,5 +132,4 @@ public class SearchExam extends Activity {
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
-
 }
