@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class AnswerQuestionTwo extends Activity {
 
     private Button avancar, btnCancel;
+    private TextView word;
+
+    private String palavra;
+    private int Point;
 
     private Bundle bundle;
 
@@ -24,6 +29,12 @@ public class AnswerQuestionTwo extends Activity {
         this.context = getApplicationContext();
 
         bundle = getIntent().getExtras();
+
+        palavra = bundle.getString("word");
+        Point = Integer.valueOf(bundle.getString("Point"));
+
+        word = findViewById(R.id.word);
+        word.setText(palavra);
 
         btnCancel = findViewById(R.id.btnCancel);
 
@@ -62,7 +73,7 @@ public class AnswerQuestionTwo extends Activity {
                 it.putExtra("name", bundle.getString("name"));
                 it.putExtra("frase", bundle.getString("frase"));
 
-                it.putExtra("Point", bundle.getString("Point"));
+                it.putExtra("Point", String.valueOf(Point));
 
                 it.putExtra("uid", bundle.getString("uid"));
                 it.putExtra("userScore", bundle.getString("userScore"));
