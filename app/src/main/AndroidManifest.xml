@@ -53,7 +53,7 @@
             android:label="@string/title_activity_pagina_principal" />
         <activity
             android:name=".MinhasProvas"
-            android:label="@string/title_activity_minhas_provas" />
+            android:label="@string/title_activity_pagina_principal" />
         <activity
             android:name=".BuildQuestionOne"
             android:label="@string/title_activity_build_question_one" />

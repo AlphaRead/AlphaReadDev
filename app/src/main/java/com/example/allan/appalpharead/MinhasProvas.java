@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
@@ -29,6 +31,7 @@ public class MinhasProvas extends Activity {
 
     private ArrayList<String> titles, points;
     private ArrayList<RankUsers> rank = new ArrayList<>();
+    private ProgressBar prog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class MinhasProvas extends Activity {
 
         titles = new ArrayList<>();
         points = new ArrayList<>();
+        prog = findViewById(R.id.progressMinhasProvas);
+        prog.setVisibility(View.VISIBLE);
 
         DatabaseReference provasRef = mDatabase.getReference("/Users/"+uid+"/Provas/");
 
@@ -59,6 +64,7 @@ public class MinhasProvas extends Activity {
                     points.add(String.valueOf(rank.get(i).getPoint()));
                 }
                 initRecyclerView();
+                prog.setVisibility(View.GONE);
             }
 
             @Override

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
@@ -30,6 +31,7 @@ public class RankingFrament extends Fragment {
     private ArrayList<String> titles, points;
     private ArrayList<RankUsers> rank = new ArrayList<>();
 
+    private ProgressBar prog;
     private Context context;
     RecyclerView rv;
 
@@ -39,6 +41,8 @@ public class RankingFrament extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
+        prog = view.findViewById(R.id.progressRank);
+        prog.setVisibility(View.VISIBLE);
         context = view.getContext();
 
         rv = view.findViewById(R.id.recycler_view_rank);
@@ -71,6 +75,7 @@ public class RankingFrament extends Fragment {
                     points.add(String.valueOf(rank.get(i).getPoint()));
                 }
                 initRecyclerView();
+                prog.setVisibility(View.GONE);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
@@ -79,7 +84,6 @@ public class RankingFrament extends Fragment {
 
     private void initRecyclerView(){
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(titles, points, context);
-        //RecyclerViewAdapter adapter = new RecyclerViewAdapter(rank, context);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(context));
     }

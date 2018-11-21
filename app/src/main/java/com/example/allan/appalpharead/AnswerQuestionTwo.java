@@ -1,6 +1,7 @@
 package com.example.allan.appalpharead;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -9,7 +10,7 @@ import android.widget.Button;
 
 public class AnswerQuestionTwo extends Activity {
 
-    private Button avancar;
+    private Button avancar, btnCancel;
 
     private Bundle bundle;
 
@@ -23,6 +24,33 @@ public class AnswerQuestionTwo extends Activity {
         this.context = getApplicationContext();
 
         bundle = getIntent().getExtras();
+
+        btnCancel = findViewById(R.id.btnCancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(AnswerQuestionTwo.this);
+                alert.setTitle("Tem certeza de que deseja sair?");
+                alert
+                        .setMessage("Todo o progresso nesta construção de prova será perdido.")
+                        .setIcon(R.drawable.notification)
+                        .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(new Intent(AnswerQuestionTwo.this, PaginaPrincipal.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                android.app.AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
+            }
+        });
 
         avancar = findViewById(R.id.btnAvancar);
         avancar.setOnClickListener(new View.OnClickListener() {

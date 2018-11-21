@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
 import com.example.allan.appalpharead.provas.Prova;
@@ -35,6 +36,7 @@ public class SearchExam extends Activity {
     private ArrayList<String> titles, points, uid;
     private ArrayList<Prova> prova;
     private String myScore;
+    private ProgressBar prog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,8 @@ public class SearchExam extends Activity {
 
         mAuth = FirebaseAuth.getInstance();
         Uid = mAuth.getUid();
+        prog = findViewById(R.id.progressAllProvas);
+        prog.setVisibility(View.VISIBLE);
 
         initList();
     }
@@ -92,6 +96,7 @@ public class SearchExam extends Activity {
                     }
                 }
                 initRecyclerView();
+                prog.setVisibility(View.GONE);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}

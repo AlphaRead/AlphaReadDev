@@ -2,6 +2,7 @@ package com.example.allan.appalpharead;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 public class AnswerQuestionFour extends Activity {
 
-    private Button avancar, gravar, play;
+    private Button avancar, gravar, play, btnCancel;
     private Bundle bundle;
     private Context context;
     private TextView frase;
@@ -48,6 +49,33 @@ public class AnswerQuestionFour extends Activity {
 
         flagGravar = false;
         flagPlay = false;
+
+        btnCancel = findViewById(R.id.btnCancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(AnswerQuestionFour.this);
+                alert.setTitle("Tem certeza de que deseja sair?");
+                alert
+                        .setMessage("Todo o progresso nesta construção de prova será perdido.")
+                        .setIcon(R.drawable.notification)
+                        .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(new Intent(AnswerQuestionFour.this, PaginaPrincipal.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                android.app.AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+
+            }
+        });
 
         gravar = findViewById(R.id.gravar);
         gravar.setOnClickListener((new View.OnClickListener() {
