@@ -74,7 +74,6 @@ public class MinhasProvas extends Activity {
                         titles.add(rank.get(i).getName());
                         points.add(String.valueOf(rank.get(i).getPoint()));
                     }
-
                     initRecyclerView();
                 }
                 prog.setVisibility(View.GONE);

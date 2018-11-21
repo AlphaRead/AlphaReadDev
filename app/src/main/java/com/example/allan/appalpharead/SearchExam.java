@@ -15,6 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.allan.appalpharead.Adapters.RecyclerViewAdapter;
+import com.example.allan.appalpharead.Algoritms.QuickSortName;
+import com.example.allan.appalpharead.Algoritms.QuickSortRankProvas;
+import com.example.allan.appalpharead.Algoritms.QuickSortRankUsers;
+import com.example.allan.appalpharead.Algoritms.RankProvas;
 import com.example.allan.appalpharead.provas.Prova;
 import com.example.allan.appalpharead.provas.QuestionFour;
 import com.example.allan.appalpharead.provas.QuestionOne;
@@ -37,6 +41,7 @@ public class SearchExam extends Activity {
     private FirebaseAuth mAuth;
     private String Uid;
 
+    private ArrayList<RankProvas> rank = new ArrayList<>();
     private ArrayList<String> titles, points, uid;
     private ArrayList<Prova> prova;
     private String myScore;
@@ -68,8 +73,6 @@ public class SearchExam extends Activity {
     }
 
     private void initList(){
-
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference refProva = database.getReference("Users/");
 
@@ -85,7 +88,24 @@ public class SearchExam extends Activity {
                     }
 
                     for (DataSnapshot pSnapShot : ds.child("Provas").getChildren()) {
-                        titles.add(pSnapShot.child("questionTitle").getValue().toString());
+                        QuestionOne q1 = new QuestionOne(pSnapShot.child("_q1").child("w1").getValue().toString(),
+                                pSnapShot.child("_q1").child("w2").getValue().toString(),
+                                pSnapShot.child("_q1").child("w3").getValue().toString());
+
+                        QuestionTwo q2 = new QuestionTwo(pSnapShot.child("_q2").child("word").getValue().toString());
+
+
+                        QuestionThree q3 = new QuestionThree(pSnapShot.child("_q3").child("name").getValue().toString(), pSnapShot.child("_q3").child("image").getValue().toString());
+
+                        QuestionFour q4 = new QuestionFour(pSnapShot.child("_q4").child("frase").getValue().toString());
+
+                        Prova p = new Prova(q1, q2, q3, q4, pSnapShot.child("questionTitle").getValue().toString(), pSnapShot.child("userUid").getValue().toString());
+                        p.setScore(Integer.valueOf(pSnapShot.child("score").getValue().toString()));
+                        rank.add(new RankProvas(pSnapShot.child("questionTitle").getValue().toString(),
+                                pSnapShot.child("score").getValue().toString(),
+                                pSnapShot.getKey(),
+                                p));
+                        /*titles.add(pSnapShot.child("questionTitle").getValue().toString());
                         points.add(pSnapShot.child("score").getValue().toString());
                         uid.add(pSnapShot.getKey());
 
@@ -102,14 +122,24 @@ public class SearchExam extends Activity {
 
                         Prova p = new Prova(q1, q2, q3, q4, pSnapShot.child("questionTitle").getValue().toString(), pSnapShot.child("userUid").getValue().toString());
                         p.setScore(Integer.valueOf(pSnapShot.child("score").getValue().toString()));
-                        prova.add(p);
+                        prova.add(p);*/
                     }
                 }
-                if (prova.isEmpty()){
+                if (rank.isEmpty()){
                     img.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.books));
                     msg.setText("Não existe nenhuma atividade registrada até o momento.\n\nCrie uma atividade agora para que outras pessoas possam aprender com você!");
                 }
-                else initRecyclerView();
+                else{
+                    QuickSortRankProvas rp = new QuickSortRankProvas();
+                    rank = rp.sort(rank, 0, rank.size() - 1);
+                    for(int i=0; i<rank.size(); i++) {
+                        titles.add(rank.get(i).getTitles());
+                        points.add(rank.get(i).getPoints());
+                        uid.add(rank.get(i).getUid());
+                        prova.add(rank.get(i).getProva());
+                    }
+                    initRecyclerView();
+                }
 
                 prog.setVisibility(View.GONE);
             }
