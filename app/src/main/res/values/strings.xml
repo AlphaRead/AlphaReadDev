@@ -24,4 +24,17 @@
     <string name="title_activity_answer_question_two">AnswerQuestionTwo</string>
     <string name="title_activity_answer_question_three">AnswerQuestionThree</string>
     <string name="title_activity_answer_question_four">AnswerQuestionFour</string>
+    <string-array name="classes_gramaticais">
+        <item>Substantivo</item>
+        <item>Verbo</item>
+        <item>Adjetivo</item>
+        <item>Pronome</item>
+        <item>Artigo</item>
+        <item>Numeral</item>
+        <item>Preposição</item>
+        <item>Conjunção</item>
+        <item>Interjeição</item>
+        <item>Advérbio</item>
+    </string-array>
+
 </resources>
