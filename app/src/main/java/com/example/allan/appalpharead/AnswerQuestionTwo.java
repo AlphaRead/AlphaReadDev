@@ -189,6 +189,8 @@ public class AnswerQuestionTwo extends Activity {
                             Point = Integer.valueOf(bundle.getString("Point")) + 1;
                         }else check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
 
+                        Thread.sleep(7000);
+
                         it.putExtra("Point", String.valueOf(Point));
 
                         startActivity(it);
