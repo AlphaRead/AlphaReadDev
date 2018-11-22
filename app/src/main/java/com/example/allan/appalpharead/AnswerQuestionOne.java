@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +31,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AnswerQuestionOne extends Activity {
 
-    private TextView words, sig1, sig2, sig3;
+    private TextView words, sig1, sig2, sig3, result1, result2, result3;
     private EditText ans1, ans2, ans3;
-
+    private ImageView check1, check2, check3, cat;
     private Button avancar, btnCancel;
 
     private Bundle bundle;
@@ -43,6 +44,8 @@ public class AnswerQuestionOne extends Activity {
     private ArrayList<Integer> relation = new ArrayList<>();
 
     private boolean[] v = new boolean[]{false, false, false};
+    private Boolean flag;
+    private int point;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,17 @@ public class AnswerQuestionOne extends Activity {
         setContentView(R.layout.activity_answer_question_one);
 
         this.context = getApplicationContext();
+
+        flag = true;
+        point = 0;
+
+        result1 = findViewById(R.id.result1);
+        result2 = findViewById(R.id.result2);
+        result3 = findViewById(R.id.result3);
+        check1 = findViewById(R.id.check1);
+        check2 = findViewById(R.id.check2);
+        check3 = findViewById(R.id.check3);
+        cat = findViewById(R.id.cat);
 
         bundle = getIntent().getExtras();
 
@@ -106,37 +120,57 @@ public class AnswerQuestionOne extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ans1 = findViewById(R.id.ans1);
-                ans2 = findViewById(R.id.ans2);
-                ans3 = findViewById(R.id.ans3);
+                if(flag){
+                    flag = false;
 
-                int point = avaliate(ans1.getText().toString(), ans2.getText().toString(), ans3.getText().toString());
+                    ans1 = findViewById(R.id.ans1);
+                    ans2 = findViewById(R.id.ans2);
+                    ans3 = findViewById(R.id.ans3);
 
-                Intent it = new Intent(context, AnswerQuestionTwo.class);
+                    point = avaliate(ans1.getText().toString(), ans2.getText().toString(), ans3.getText().toString());
+                }else {
+                    Intent it = new Intent(context, AnswerQuestionTwo.class);
 
-                it.putExtra("word", bundle.getString("word"));
-                it.putExtra("picture", bundle.getString("picture"));
-                it.putExtra("name", bundle.getString("name"));
-                it.putExtra("frase", bundle.getString("frase"));
+                    it.putExtra("word", bundle.getString("word"));
+                    it.putExtra("picture", bundle.getString("picture"));
+                    it.putExtra("name", bundle.getString("name"));
+                    it.putExtra("frase", bundle.getString("frase"));
 
-                it.putExtra("Point", Integer.toString(point));
+                    it.putExtra("Point", Integer.toString(point));
 
-                it.putExtra("uid", bundle.getString("uid"));
-                it.putExtra("userScore", bundle.getString("userScore"));
-                it.putExtra("score", bundle.getString("score"));
-                it.putExtra("userUid", bundle.getString("userUid"));
+                    it.putExtra("uid", bundle.getString("uid"));
+                    it.putExtra("userScore", bundle.getString("userScore"));
+                    it.putExtra("score", bundle.getString("score"));
+                    it.putExtra("userUid", bundle.getString("userUid"));
 
-                startActivity(it);
-                finish();
+                    startActivity(it);
+                    finish();
+                }
             }
 
             private int avaliate(String ans1, String ans2, String ans3) {
                 int point = 0;
-                Log.i("myTag", ans1 + " " + ans2 + " " + ans3);
-                Log.i("myTag", q.get(relation.get(0)) + " " + q.get(relation.get(1)) + " " + q.get(relation.get(2)));
-                if(ans1.toLowerCase().equals(q.get(relation.get(0)).toLowerCase())) point++;
-                if(ans2.toLowerCase().equals(q.get(relation.get(1)).toLowerCase())) point++;
-                if(ans3.toLowerCase().equals(q.get(relation.get(2)).toLowerCase())) point++;
+                cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat));
+
+                result1.setText(q.get(relation.get(0)));
+                result2.setText(q.get(relation.get(1)));
+                result3.setText(q.get(relation.get(2)));
+
+                if(ans1.toLowerCase().equals(q.get(relation.get(0)).toLowerCase())) {
+                    check1.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess));
+                    point++;
+                }else check1.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error));
+
+                if(ans2.toLowerCase().equals(q.get(relation.get(1)).toLowerCase())){
+                    check2.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess_2));
+                    point++;
+                }else check2.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
+
+                if(ans3.toLowerCase().equals(q.get(relation.get(2)).toLowerCase())){
+                    check3.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess));
+                    point++;
+                }else check3.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error));
+
                 return point;
             }
         });
@@ -189,7 +223,6 @@ public class AnswerQuestionOne extends Activity {
 
                         for (Sense s : e.sense) {
                             Matcher m = REMOVE_TAGS.matcher(s.def);
-                            Log.i("Words", m.replaceAll(";").split(";")[0]);
                             sig.setText(m.replaceAll(";").split(";")[0]);
                             break;
                         }

@@ -107,4 +107,35 @@
         app:layout_constraintTop_toBottomOf="@+id/word"
         app:layout_constraintVertical_bias="0.16" />
 
+    <ImageView
+        android:id="@+id/cat"
+        android:layout_width="96dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="84dp"
+        app:layout_constraintStart_toEndOf="@+id/btnAvancar"
+        app:layout_constraintTop_toBottomOf="@+id/classlist" />
+
+    <ImageView
+        android:id="@+id/check"
+        android:layout_width="177dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="146dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="32dp"
+        android:textAlignment="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/check"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="@+id/check"
+        app:layout_constraintTop_toTopOf="@+id/check" />
+
 </android.support.constraint.ConstraintLayout>

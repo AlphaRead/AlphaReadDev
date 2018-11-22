@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,10 +30,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AnswerQuestionTwo extends Activity {
 
     private Button avancar, btnCancel;
-    private TextView word;
+    private TextView word, result;
     private Spinner classlist;
+    private ImageView check, cat;
+
     private String palavra, selecao, classe;
     private int Point;
+    private Boolean flag;
 
     private Bundle bundle;
 
@@ -45,9 +49,14 @@ public class AnswerQuestionTwo extends Activity {
 
         this.context = getApplicationContext();
 
+        check = findViewById(R.id.check);
+        cat = findViewById(R.id.cat);
+        result = findViewById(R.id.result);
+
         bundle = getIntent().getExtras();
 
         palavra = bundle.getString("word");
+        Point = 0;
 
         word = findViewById(R.id.word);
         word.setText(palavra);
@@ -108,6 +117,16 @@ public class AnswerQuestionTwo extends Activity {
         requestDicionario.enqueue(new Callback<DicionarioOnline>() {
             @Override
             public void onResponse(Call<DicionarioOnline> call, Response<DicionarioOnline> response) {
+                Intent it = new Intent(context, AnswerQuestionThree.class);
+
+                it.putExtra("picture", bundle.getString("picture"));
+                it.putExtra("name", bundle.getString("name"));
+                it.putExtra("frase", bundle.getString("frase"));
+
+                it.putExtra("uid", bundle.getString("uid"));
+                it.putExtra("userScore", bundle.getString("userScore"));
+                it.putExtra("score", bundle.getString("score"));
+                it.putExtra("userUid", bundle.getString("userUid"));
 
                 if (response.isSuccessful()) {
                     try {
@@ -118,7 +137,6 @@ public class AnswerQuestionTwo extends Activity {
 
                         for (Sense s : e.sense) {
                             Matcher m = REMOVE_TAGS.matcher(s.gramGrp);
-                            Log.i("Words", m.replaceAll(";").split(";")[0]);
                             classe = m.replaceAll(";").split(";")[0];
                             break;
                         }
@@ -164,48 +182,31 @@ public class AnswerQuestionTwo extends Activity {
                                 classe = "";
                                 break;
                         }
-                        Log.i("questao2", classe);
-                        Log.i("questao2", selecao);
+                        cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
+                        result.setText(classe);
                         if (classe.equals(selecao)) {
+                            check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess_2));
                             Point = Integer.valueOf(bundle.getString("Point")) + 1;
-                            Log.i("questao2", String.valueOf(Point));
-                        }
-                        Intent it = new Intent(context, AnswerQuestionThree.class);
+                        }else check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
 
-                        it.putExtra("picture", bundle.getString("picture"));
-                        it.putExtra("name", bundle.getString("name"));
-                        it.putExtra("frase", bundle.getString("frase"));
-
-                        Log.i("questao2", String.valueOf(Point));
                         it.putExtra("Point", String.valueOf(Point));
-
-                        it.putExtra("uid", bundle.getString("uid"));
-                        it.putExtra("userScore", bundle.getString("userScore"));
-                        it.putExtra("score", bundle.getString("score"));
-                        it.putExtra("userUid", bundle.getString("userUid"));
 
                         startActivity(it);
                         finish();
 
                     }catch (Exception e){
                         Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
-                        Intent it = new Intent(context, AnswerQuestionThree.class);
 
-                        it.putExtra("picture", bundle.getString("picture"));
-                        it.putExtra("name", bundle.getString("name"));
-                        it.putExtra("frase", bundle.getString("frase"));
-
-                        Log.i("questao2", bundle.getString("Point"));
                         it.putExtra("Point", bundle.getString("Point"));
-
-                        it.putExtra("uid", bundle.getString("uid"));
-                        it.putExtra("userScore", bundle.getString("userScore"));
-                        it.putExtra("score", bundle.getString("score"));
-                        it.putExtra("userUid", bundle.getString("userUid"));
 
                         startActivity(it);
                         finish();
                     }
+                }else{
+                    it.putExtra("Point", bundle.getString("Point"));
+
+                    startActivity(it);
+                    finish();
                 }
             }
 
@@ -218,7 +219,6 @@ public class AnswerQuestionTwo extends Activity {
                 it.putExtra("name", bundle.getString("name"));
                 it.putExtra("frase", bundle.getString("frase"));
 
-                Log.i("questao2", bundle.getString("Point"));
                 it.putExtra("Point", bundle.getString("Point"));
 
                 it.putExtra("uid", bundle.getString("uid"));

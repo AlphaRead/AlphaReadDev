@@ -14,14 +14,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class AnswerQuestionThree extends Activity {
 
     private Button avancar, btnCancel;
     private Bundle bundle;
     private Context context;
-    private ImageView image;
+    private ImageView image, check, cat;
     private EditText name;
+    private TextView result;
+
+    private Boolean flag;
+    private int point;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,12 @@ public class AnswerQuestionThree extends Activity {
         setContentView(R.layout.activity_answer_question_three);
 
         this.context = getApplicationContext();
+
+        flag = true;
+        point = 0;
+        check = findViewById(R.id.check_3);
+        cat = findViewById(R.id.cat);
+        result = findViewById(R.id.result_3);
 
         bundle = getIntent().getExtras();
 
@@ -70,29 +81,38 @@ public class AnswerQuestionThree extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(context, AnswerQuestionFour.class);
+                if(flag){
+                    point = Integer.valueOf(bundle.getString("Point")) + pontuacao();
+                    flag = false;
+                }else {
+                    Intent it = new Intent(context, AnswerQuestionFour.class);
 
-                int point = Integer.valueOf(bundle.getString("Point")) + pontuacao();
-                Log.i("questao3", bundle.getString("Point"));
-                Log.i("questao3", String.valueOf(point));
+                    it.putExtra("frase", bundle.getString("frase"));
 
-                it.putExtra("frase", bundle.getString("frase"));
-                it.putExtra("Point", String.valueOf(point));
+                    it.putExtra("Point", String.valueOf(point));
 
-                it.putExtra("uid", bundle.getString("uid"));
-                it.putExtra("userScore", bundle.getString("userScore"));
-                it.putExtra("score", bundle.getString("score"));
-                it.putExtra("userUid", bundle.getString("userUid"));
+                    it.putExtra("uid", bundle.getString("uid"));
+                    it.putExtra("userScore", bundle.getString("userScore"));
+                    it.putExtra("score", bundle.getString("score"));
+                    it.putExtra("userUid", bundle.getString("userUid"));
 
-                startActivity(it);
-                finish();
+                    startActivity(it);
+                    finish();
+                }
             }
         });
     }
 
     private int pontuacao(){
-        if (name.getText().toString().toLowerCase().equals(bundle.getString("name").toLowerCase())) return 1;
-        return 0;
+        cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat));
+        result.setText(bundle.getString("name"));
+        if (name.getText().toString().toLowerCase().equals(bundle.getString("name").toLowerCase())){
+            check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess));
+            return 1;
+        }else {
+            check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error));
+            return 0;
+        }
     }
 
 }
