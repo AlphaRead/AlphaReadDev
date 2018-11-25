@@ -201,7 +201,6 @@ public class AnswerQuestionTwo extends Activity {
                                 classe = "Numeral";
                                 break;
                             default:
-                                Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
                                 classe = "";
                                 break;
                         }
@@ -212,45 +211,29 @@ public class AnswerQuestionTwo extends Activity {
                             check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess_2));
                             Point = Integer.valueOf(bundle.getString("Point")) + 1;
                         }else check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
-
-
-
                     }catch (Exception e){
-                        Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
+                        cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
+                        result.setText("Não conseguimos validar esta palavra.");
+                        check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
 
-                        it.putExtra("Point", String.valueOf(Point));
-
-                        startActivity(it);
-                        finish();
+                        flag2 = true;
                     }
                 }else{
-                    Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
+                    cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
+                    result.setText("Não conseguimos validar esta palavra.");
+                    check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
 
-                    it.putExtra("Point", String.valueOf(Point));
-
-                    startActivity(it);
-                    finish();
+                    flag2 = true;
                 }
             }
 
             @Override
             public void onFailure(Call<DicionarioOnline> call, Throwable t) {
-                Toast.makeText(context, "Palavra '"+word+"' não encontrada.", Toast.LENGTH_LONG).show();
-                Intent it = new Intent(context, AnswerQuestionThree.class);
+                cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
+                result.setText("Não conseguimos validar esta palavra.");
+                check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
 
-                it.putExtra("picture", bundle.getString("picture"));
-                it.putExtra("name", bundle.getString("name"));
-                it.putExtra("frase", bundle.getString("frase"));
-
-                it.putExtra("Point", bundle.getString("Point"));
-
-                it.putExtra("uid", bundle.getString("uid"));
-                it.putExtra("userScore", bundle.getString("userScore"));
-                it.putExtra("score", bundle.getString("score"));
-                it.putExtra("userUid", bundle.getString("userUid"));
-
-                startActivity(it);
-                finish();
+                flag2 = true;
             }
         });
     }

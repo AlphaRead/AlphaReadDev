@@ -127,8 +127,8 @@
 
     <TextView
         android:id="@+id/result"
-        android:layout_width="146dp"
-        android:layout_height="34dp"
+        android:layout_width="172dp"
+        android:layout_height="67dp"
         android:layout_marginTop="32dp"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"

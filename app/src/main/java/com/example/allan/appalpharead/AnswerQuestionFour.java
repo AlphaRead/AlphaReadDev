@@ -176,6 +176,10 @@ public class AnswerQuestionFour extends Activity {
                         onHit(_audioBase64);
                     } catch (Exception e) {
                         Log.i("questao", "erro" + e.toString());
+                        cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
+                        result.setText("Você não falou nada... Torcemos para que na próxima consiga!");
+                        check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
+                        flag2 = true;
                     }
                 }else if(flag1 && !flag2){
                     Toast.makeText(getApplicationContext(), "Aguarde. Estamos validando sua resposta.", Toast.LENGTH_LONG).show();
@@ -218,14 +222,14 @@ public class AnswerQuestionFour extends Activity {
                         transcript =  api_return.data;
                         cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
                         result.setText("Você disse:\n" + transcript);
-                        if (transcript.toLowerCase().equals(bundle.getString("frase").toLowerCase())){
+                        String str = frase.getText().toString();
+                        str = str.replaceAll("\\p{Punct}","");
+                        if (transcript.toLowerCase().equals(str.toLowerCase())){
                             check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess_2));
                             point+=1;
-                        }else{
-                            check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
-                        }
-                    }catch (Exception e){}
-                }
+                        }else check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
+                    }catch (Exception e){ }
+                }else Toast.makeText(getApplicationContext(), "Algo de errado aconteceu, tente novamente mais tarde.", Toast.LENGTH_LONG).show();
                 flag2 = true;
             }
 
