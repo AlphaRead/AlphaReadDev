@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.allan.appalpharead.api.ApiUtils;
 import com.example.allan.appalpharead.api.Data;
@@ -45,7 +46,8 @@ public class AnswerQuestionFour extends Activity {
     private MediaPlayer mediaPlayer;
 
     private String pathSaved = "", transcript = "";
-    private Boolean flagGravar, flagPlay;
+    private Boolean flagGravar, flagPlay, flag1, flag2;
+    private int point;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,9 @@ public class AnswerQuestionFour extends Activity {
 
         flagGravar = false;
         flagPlay = false;
+        flag1 = false;
+        flag2 = false;
+        point = Integer.valueOf(bundle.getString("Point"));
 
         btnCancel = findViewById(R.id.btnCancel);
 
@@ -153,40 +158,44 @@ public class AnswerQuestionFour extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                byte[] audioBytes;
-                try {
-                    File audioFile = new File(pathSaved);
-                    long fileSize = audioFile.length();
+                if (!flag1 && !flag2) {
+                    flag1 = true;
+                    byte[] audioBytes;
+                    try {
+                        File audioFile = new File(pathSaved);
+                        long fileSize = audioFile.length();
 
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    FileInputStream fis = new FileInputStream(new File(pathSaved));
-                    byte[] buf = new byte[1024];
-                    int n;
-                    while (-1 != (n = fis.read(buf))) {
-                        baos.write(buf, 0, n);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        FileInputStream fis = new FileInputStream(new File(pathSaved));
+                        byte[] buf = new byte[1024];
+                        int n;
+                        while (-1 != (n = fis.read(buf))) {
+                            baos.write(buf, 0, n);
+                        }
+                        audioBytes = baos.toByteArray();
+
+                        String _audioBase64 = Base64.encodeToString(audioBytes, Base64.DEFAULT);
+                        onHit(_audioBase64);
+                    } catch (Exception e) {
+                        Log.i("questao", "erro" + e.toString());
                     }
-                    audioBytes = baos.toByteArray();
+                }else if(flag1 && !flag2){
+                    Toast.makeText(getApplicationContext(), "Aguarde. Estamos validando sua resposta.", Toast.LENGTH_LONG).show();
+                }else if(flag1 && flag2) {
+                    Intent it = new Intent(context, FinalPoint.class);
 
-                    String _audioBase64 = Base64.encodeToString(audioBytes, Base64.DEFAULT);
-                    onHit(_audioBase64);
-                }catch (Exception e){
-                    Log.i("questao", "erro"+e.toString());
+                    it.putExtra("Point", String.valueOf(point));
+
+                    it.putExtra("uid", bundle.getString("uid"));
+                    it.putExtra("userScore", bundle.getString("userScore"));
+                    it.putExtra("score", bundle.getString("score"));
+                    it.putExtra("userUid", bundle.getString("userUid"));
+
+                    startActivity(it);
+                    finish();
                 }
-
-                Intent it = new Intent(context, FinalPoint.class);
-
-                it.putExtra("Point", bundle.getString("Point"));
-
-                it.putExtra("uid", bundle.getString("uid"));
-                it.putExtra("userScore", bundle.getString("userScore"));
-                it.putExtra("score", bundle.getString("score"));
-                it.putExtra("userUid", bundle.getString("userUid"));
-
-                startActivity(it);
-                finish();
             }
         });
-
     }
 
     private void setupMediaRecord() {
@@ -209,13 +218,15 @@ public class AnswerQuestionFour extends Activity {
                     try {
                         Data api_return = response.body();
                         transcript =  api_return.data;
+                        if (transcript.toLowerCase().equals(bundle.getString("frase").toLowerCase())) point+=1;
                     }catch (Exception e){}
                 }
+                flag2 = true;
             }
 
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
-
+                flag2 = true;
             }
         });
     }

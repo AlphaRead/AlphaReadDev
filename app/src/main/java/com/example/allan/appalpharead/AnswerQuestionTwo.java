@@ -95,7 +95,6 @@ public class AnswerQuestionTwo extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("questao", flag1.toString() + " " + flag2.toString());
                 if (!flag1 && !flag2) {
                     flag1 = true;
                     selecao = String.valueOf(classlist.getSelectedItem());
