@@ -1,34 +1,27 @@
 package com.example.allan.appalpharead;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.allan.appalpharead.api.ApiUtils;
 import com.example.allan.appalpharead.api.Data;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -40,7 +33,8 @@ public class AnswerQuestionFour extends Activity {
     private Button avancar, gravar, play, btnCancel;
     private Bundle bundle;
     private Context context;
-    private TextView frase;
+    private TextView frase, result;
+    private ImageView cat, check;
 
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
@@ -55,6 +49,10 @@ public class AnswerQuestionFour extends Activity {
         setContentView(R.layout.activity_answer_question_four);
 
         this.context = getApplicationContext();
+
+        check = findViewById(R.id.check_4);
+        result = findViewById(R.id.resposta);
+        cat = findViewById(R.id.cat);
 
         bundle = getIntent().getExtras();
 
@@ -218,7 +216,14 @@ public class AnswerQuestionFour extends Activity {
                     try {
                         Data api_return = response.body();
                         transcript =  api_return.data;
-                        if (transcript.toLowerCase().equals(bundle.getString("frase").toLowerCase())) point+=1;
+                        cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
+                        result.setText("Você disse:\n" + transcript);
+                        if (transcript.toLowerCase().equals(bundle.getString("frase").toLowerCase())){
+                            check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess_2));
+                            point+=1;
+                        }else{
+                            check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
+                        }
                     }catch (Exception e){}
                 }
                 flag2 = true;
