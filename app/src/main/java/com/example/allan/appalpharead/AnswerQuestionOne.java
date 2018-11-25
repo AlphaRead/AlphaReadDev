@@ -90,13 +90,11 @@ public class AnswerQuestionOne extends Activity {
         words.setText(text);
 
         Collections.shuffle(q);
-        for(Q1 s: q) Log.i("questao", s.getWord() + " " + s.getSig().toString());
 
         searchInDict(q.get(0).getWord(), q.get(0).getSig());
         searchInDict(q.get(1).getWord(), q.get(1).getSig());
         searchInDict(q.get(2).getWord(), q.get(2).getSig());
 
-        for(Q1 s: q) Log.i("questao", s.getWord());
 
         btnCancel = findViewById(R.id.btnCancel);
 
@@ -160,8 +158,6 @@ public class AnswerQuestionOne extends Activity {
             private int avaliate(String ans1, String ans2, String ans3) {
                 int point = 0;
                 cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat));
-
-                for(Q1 s: q) Log.i("questao", s.getWord() + " " + s.getSig().toString());
 
                 ArrayList<String> respostas = new ArrayList<>();
                 respostas.add("."); respostas.add("."); respostas.add(".");

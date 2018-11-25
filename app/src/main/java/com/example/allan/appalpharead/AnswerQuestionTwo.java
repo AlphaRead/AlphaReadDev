@@ -95,11 +95,12 @@ public class AnswerQuestionTwo extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("questao", flag1.toString() + " " + flag2.toString());
                 if (!flag1 && !flag2) {
+                    flag1 = true;
                     selecao = String.valueOf(classlist.getSelectedItem());
                     searchInDict(palavra, selecao);
-                    flag1 = true;
-                }else if (flag1 != !flag2){
+                }else if (flag1 && !flag2){
                     Toast.makeText(getApplicationContext(), "Aguarde. Estamos validando sua resposta.", Toast.LENGTH_LONG).show();
                 }else if (flag1 && flag2){
                     Intent it = new Intent(context, AnswerQuestionThree.class);
@@ -208,6 +209,7 @@ public class AnswerQuestionTwo extends Activity {
                         }
                         cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat_2));
                         result.setText(classe);
+                        flag2 = true;
                         if (classe.equals(selecao)) {
                             check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess_2));
                             Point = Integer.valueOf(bundle.getString("Point")) + 1;
