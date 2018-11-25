@@ -100,7 +100,7 @@ public class AnswerQuestionFour extends Activity {
 
                     pathSaved = Environment.getExternalStorageDirectory()
                             .getAbsolutePath()+"/"
-                            + UUID.randomUUID().toString()+"_audio_record.wav";
+                            + UUID.randomUUID().toString()+"_audio_record.3gp";
 
                     setupMediaRecord();
                     try{
@@ -169,7 +169,9 @@ public class AnswerQuestionFour extends Activity {
 
                     String _audioBase64 = Base64.encodeToString(audioBytes, Base64.DEFAULT);
                     onHit(_audioBase64);
-                }catch (Exception e){ }
+                }catch (Exception e){
+                    Log.i("questao", "erro"+e.toString());
+                }
 
                 Intent it = new Intent(context, FinalPoint.class);
 

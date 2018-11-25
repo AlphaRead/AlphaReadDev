@@ -36,7 +36,7 @@ public class AnswerQuestionTwo extends Activity {
 
     private String palavra, selecao, classe;
     private int Point;
-    private Boolean flag;
+    private Boolean flag1, flag2;
 
     private Bundle bundle;
 
@@ -57,6 +57,8 @@ public class AnswerQuestionTwo extends Activity {
 
         palavra = bundle.getString("word");
         Point = 0;
+        flag1 = false;
+        flag2 = false;
 
         word = findViewById(R.id.word);
         word.setText(palavra);
@@ -93,8 +95,29 @@ public class AnswerQuestionTwo extends Activity {
         avancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selecao = String.valueOf(classlist.getSelectedItem());
-                searchInDict(palavra, selecao);
+                if (!flag1 && !flag2) {
+                    selecao = String.valueOf(classlist.getSelectedItem());
+                    searchInDict(palavra, selecao);
+                    flag1 = true;
+                }else if (flag1 != !flag2){
+                    Toast.makeText(getApplicationContext(), "Aguarde. Estamos validando sua resposta.", Toast.LENGTH_LONG).show();
+                }else if (flag1 && flag2){
+                    Intent it = new Intent(context, AnswerQuestionThree.class);
+
+                    it.putExtra("picture", bundle.getString("picture"));
+                    it.putExtra("name", bundle.getString("name"));
+                    it.putExtra("frase", bundle.getString("frase"));
+
+                    it.putExtra("uid", bundle.getString("uid"));
+                    it.putExtra("userScore", bundle.getString("userScore"));
+                    it.putExtra("score", bundle.getString("score"));
+                    it.putExtra("userUid", bundle.getString("userUid"));
+
+                    it.putExtra("Point", String.valueOf(Point));
+
+                    startActivity(it);
+                    finish();
+                }
             }
         });
     }
@@ -117,6 +140,7 @@ public class AnswerQuestionTwo extends Activity {
         requestDicionario.enqueue(new Callback<DicionarioOnline>() {
             @Override
             public void onResponse(Call<DicionarioOnline> call, Response<DicionarioOnline> response) {
+
                 Intent it = new Intent(context, AnswerQuestionThree.class);
 
                 it.putExtra("picture", bundle.getString("picture"));
@@ -189,23 +213,20 @@ public class AnswerQuestionTwo extends Activity {
                             Point = Integer.valueOf(bundle.getString("Point")) + 1;
                         }else check.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
 
-                        Thread.sleep(7000);
+
+
+                    }catch (Exception e){
+                        Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
 
                         it.putExtra("Point", String.valueOf(Point));
 
                         startActivity(it);
                         finish();
-
-                    }catch (Exception e){
-                        Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
-
-                        it.putExtra("Point", bundle.getString("Point"));
-
-                        startActivity(it);
-                        finish();
                     }
                 }else{
-                    it.putExtra("Point", bundle.getString("Point"));
+                    Toast.makeText(context, "Classe gramatical não encontrada.", Toast.LENGTH_LONG).show();
+
+                    it.putExtra("Point", String.valueOf(Point));
 
                     startActivity(it);
                     finish();

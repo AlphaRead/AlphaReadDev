@@ -13,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.allan.appalpharead.Algoritms.Q1;
 import com.example.allan.appalpharead.models.DicionarioOnline;
 import com.example.allan.appalpharead.models.DicionarioService;
 import com.example.allan.appalpharead.models.Entry;
 import com.example.allan.appalpharead.models.Sense;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,7 +42,7 @@ public class AnswerQuestionOne extends Activity {
 
     private Context context;
 
-    private ArrayList<String> q;
+    private ArrayList<Q1> q;
     private ArrayList<Integer> relation = new ArrayList<>();
 
     private boolean[] v = new boolean[]{false, false, false};
@@ -67,27 +69,34 @@ public class AnswerQuestionOne extends Activity {
 
         bundle = getIntent().getExtras();
 
-        q = new ArrayList<>();
-        q.add(bundle.getString("word1"));
-        q.add(bundle.getString("word2"));
-        q.add(bundle.getString("word3"));
-
-        words = findViewById(R.id.words);
-        String text = "Palavras: ";
-        text = text.concat(q.get(0).concat(", ")).concat(q.get(1).concat(", ")).concat(q.get(2));
-        words.setText(text);
-
         sig1 = findViewById(R.id.sig1);
         sig2 = findViewById(R.id.sig2);
         sig3 = findViewById(R.id.sig3);
 
-        relation.add(-1);
-        relation.add(-1);
-        relation.add(-1);
+        ArrayList<Q1> txt = new ArrayList<>();
+        txt.add(new Q1(sig1, 0));
+        txt.add(new Q1(sig2, 1));
+        txt.add(new Q1(sig3, 2));
+        Collections.shuffle(txt);
 
-        putSig(sig1, 0);
-        putSig(sig2, 1);
-        putSig(sig3, 2);
+        q = new ArrayList<>();
+        q.add(new Q1(bundle.getString("word1"), txt.get(0).getSig(), txt.get(0).getPos()));
+        q.add(new Q1(bundle.getString("word2"), txt.get(1).getSig(), txt.get(1).getPos()));
+        q.add(new Q1(bundle.getString("word3"), txt.get(2).getSig(), txt.get(2).getPos()));
+
+        words = findViewById(R.id.words);
+        String text = "Palavras: ";
+        text = text.concat(q.get(0).getWord().concat(", ")).concat(q.get(1).getWord().concat(", ")).concat(q.get(2).getWord());
+        words.setText(text);
+
+        Collections.shuffle(q);
+        for(Q1 s: q) Log.i("questao", s.getWord() + " " + s.getSig().toString());
+
+        searchInDict(q.get(0).getWord(), q.get(0).getSig());
+        searchInDict(q.get(1).getWord(), q.get(1).getSig());
+        searchInDict(q.get(2).getWord(), q.get(2).getSig());
+
+        for(Q1 s: q) Log.i("questao", s.getWord());
 
         btnCancel = findViewById(R.id.btnCancel);
 
@@ -152,21 +161,28 @@ public class AnswerQuestionOne extends Activity {
                 int point = 0;
                 cat.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.cat));
 
-                result1.setText(q.get(relation.get(0)));
-                result2.setText(q.get(relation.get(1)));
-                result3.setText(q.get(relation.get(2)));
+                for(Q1 s: q) Log.i("questao", s.getWord() + " " + s.getSig().toString());
 
-                if(ans1.toLowerCase().equals(q.get(relation.get(0)).toLowerCase())) {
+                ArrayList<String> respostas = new ArrayList<>();
+                respostas.add("."); respostas.add("."); respostas.add(".");
+
+                for (Q1 s: q) respostas.set(s.getPos(), s.getWord());
+
+                result1.setText(respostas.get(0));
+                result2.setText(respostas.get(1));
+                result3.setText(respostas.get(2));
+
+                if(ans1.toLowerCase().equals(respostas.get(0).toLowerCase())) {
                     check1.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess));
                     point++;
                 }else check1.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error));
 
-                if(ans2.toLowerCase().equals(q.get(relation.get(1)).toLowerCase())){
+                if(ans2.toLowerCase().equals(respostas.get(1).toLowerCase())){
                     check2.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess_2));
                     point++;
                 }else check2.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error_2));
 
-                if(ans3.toLowerCase().equals(q.get(relation.get(2)).toLowerCase())){
+                if(ans3.toLowerCase().equals(respostas.get(2).toLowerCase())){
                     check3.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_sucess));
                     point++;
                 }else check3.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.balloon_error));
@@ -174,29 +190,6 @@ public class AnswerQuestionOne extends Activity {
                 return point;
             }
         });
-    }
-
-    private void putSig(final TextView sig, int i){
-        Random aleatorio = new Random();
-        while (true) {
-            int n = aleatorio.nextInt(3);
-            if (n == 0 && !v[0]) {
-                v[0] = true;
-                relation.set(0, i);
-                searchInDict(q.get(0), sig);
-                break;
-            } else if (n == 1 && !v[1]) {
-                v[1] = true;
-                relation.set(1, i);
-                searchInDict(q.get(1), sig);
-                break;
-            } else if (n == 2 && !v[2]) {
-                v[2] = true;
-                relation.set(2, i);
-                searchInDict(q.get(2), sig);
-                break;
-            }
-        }
     }
 
     private void searchInDict(final String word, final TextView sig){
@@ -229,6 +222,8 @@ public class AnswerQuestionOne extends Activity {
                     }catch (Exception e){
                         sig.setText("Palavra não encontrada no dicionário.");
                     }
+                }else{
+                    sig.setText("Palavra não encontrada no dicionário.");
                 }
             }
 
